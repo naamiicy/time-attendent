@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'calendarPage.dart';
+import 'calendar-page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,9 +18,8 @@ class _LoginPageState extends State<LoginPage> {
         body: Container(
       padding: EdgeInsets.fromLTRB(20.0, 120.0, 20.0, 120.0),
       child: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
+          key: _formKey,
+          child: Column(children: <Widget>[
             Container(
               width: 150.0,
               height: 150.0,
@@ -30,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 20.0,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
@@ -44,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                   onSaved: (value) => _email = value),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: TextFormField(
                   keyboardType: TextInputType.text,
                   obscureText: true,
@@ -62,9 +61,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 20.0,
             ),
             _signinButton(),
-          ],
-        ),
-      ),
+          ])),
     ));
   }
 
@@ -72,14 +69,14 @@ class _LoginPageState extends State<LoginPage> {
     return Padding(
       padding: EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 20.0),
       child: MaterialButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(30.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         onPressed: () {
           setState(() {
             final form = _formKey.currentState;
             form.save();
             setAuthToPreferences(_email, _password);
-            routeToHomePage(context);
+            routeToCalendarPage(context);
           });
         },
         color: Colors.blue,
@@ -91,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void routeToHomePage(context) {
+  void routeToCalendarPage(context) {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => CalendarPage()));
   }

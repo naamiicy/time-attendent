@@ -16,11 +16,10 @@ class _CalendarPageState extends State<CalendarPage> {
     Text("Notification"),
     Text("Profile"),
   ];
+  final CalendarController _calendarController = CalendarController();
   // Map<DateTime, List> _events;
   // Map<DateTime, List> _visibleEvents;
   // List _selectedEvents;
-
-  final CalendarController _calendarController = CalendarController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,6 @@ class _CalendarPageState extends State<CalendarPage> {
       body: Column(
         children: <Widget>[
           tableCalendar(),
-          showDateSaved(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -67,68 +65,6 @@ class _CalendarPageState extends State<CalendarPage> {
         locale: 'en_US',
         calendarController: _calendarController,
         onDaySelected: getDateTime,
-      ),
-    );
-  }
-
-  Widget showDateSaved() {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        children: <Widget>[
-          Card(
-            child: ListTile(
-              title: Text(''),
-              subtitle: Text(''),
-              trailing: FlatButton(
-                color: Colors.blue,
-                child: Text('Check In',
-                    style: TextStyle(
-                      color: Colors.white,
-                    )),
-                onPressed: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Container(
-                              color: Colors.white,
-                              child: Column(children: [
-                                ListTile(
-                                  title: Center(
-                                    child: Text('Check In'),
-                                  ),
-                                  // trailing: Material(
-                                  //   color: Colors.transparent,
-                                  //   child: InkWell(
-                                  //       onTap: () {
-                                  //         Navigator.of(context).pop();
-                                  //       },
-                                  //       child: Icon(Icons.close)),
-                                  // ),
-                                )
-                              ]),
-                            ));
-                      });
-                },
-              ),
-            ),
-          ),
-          // Card(
-          //   child: ListTile(
-          //       title: Text(''),
-          //       subtitle: Text(''),
-          //       trailing: FlatButton(
-          //         color: Colors.blue,
-          //         child: Text('Check Out',
-          //             style: TextStyle(
-          //               color: Colors.white,
-          //             )),
-          //         onPressed: () {},
-          //       )),
-          // )
-        ],
       ),
     );
   }

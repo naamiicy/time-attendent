@@ -15,76 +15,86 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      padding: EdgeInsets.fromLTRB(20.0, 120.0, 20.0, 120.0),
-      child: Form(
-          key: _formKey,
-          child: Column(children: <Widget>[
-            Container(
-              width: 150.0,
-              height: 150.0,
-              child: Image.asset('assets/icons/brain2.png'),
+      body: Container(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Column(
+              children: [
+                Image.asset(
+                  'assets/icons/brain2.png',
+                  height: 150.0,
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: "Email Address",
+                          prefixIcon: Padding(
+                              padding: EdgeInsetsDirectional.only(start: 12.0),
+                              child: Icon(Icons.email)),
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25.0)),
+                        ),
+                        onSaved: (value) => _email = value,
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: "Password",
+                          prefixIcon: Padding(
+                              padding: EdgeInsetsDirectional.only(start: 12.0),
+                              child: Icon(Icons.vpn_key)),
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25.0)),
+                        ),
+                        onSaved: (value) => _password = value,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    children: <Widget>[
+                      _signinButton(),
+                    ],
+                  ),
+                )
+              ],
             ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                      labelText: "Email Address",
-                      prefixIcon: Padding(
-                          padding: EdgeInsetsDirectional.only(start: 12.0),
-                          child: Icon(Icons.email)),
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0))),
-                  onSaved: (value) => _email = value),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      labelText: "Password",
-                      prefixIcon: Padding(
-                          padding: EdgeInsetsDirectional.only(start: 12.0),
-                          child: Icon(Icons.vpn_key)),
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0))),
-                  onSaved: (value) => _password = value),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            _signinButton(),
-          ])),
-    ));
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _signinButton() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 20.0),
-      child: MaterialButton(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        onPressed: () {
-          setState(() {
-            final form = _formKey.currentState;
-            form.save();
-            setAuthToPreferences(_email, _password);
-            routeToCalendarPage(context);
-          });
-        },
-        color: Colors.blue,
-        textColor: Colors.white,
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        child: Text('Login', style: TextStyle(fontSize: 18.0)),
-      ),
+    return MaterialButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      onPressed: () {
+        setState(() {
+          final form = _formKey.currentState;
+          form.save();
+          // setAuthToPreferences(_email, _password);
+          routeToCalendarPage(context);
+        });
+      },
+      color: Colors.blue,
+      textColor: Colors.white,
+      minWidth: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+      child: Text('Login', style: TextStyle(fontSize: 18.0)),
     );
   }
 
@@ -93,10 +103,10 @@ class _LoginPageState extends State<LoginPage> {
         context, MaterialPageRoute(builder: (context) => CalendarPage()));
   }
 
-  Future<void> setAuthToPreferences(String _email, String _password) async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString(this._email, _email);
-  }
+  // Future<void> setAuthToPreferences(String _email, String _password) async {
+  //   final SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   preferences.setString(this._email, _email);
+  // }
 
   // Future<String> getAuthFromPreferences() async {
   //   final SharedPreferences preferences = await SharedPreferences.getInstance();

@@ -10,6 +10,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Profile');
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(child: Text('Profile')),
+      ),
+    );
   }
 }

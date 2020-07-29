@@ -10,6 +10,10 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Notification');
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(child: Text('Notification')),
+      ),
+    );
   }
 }

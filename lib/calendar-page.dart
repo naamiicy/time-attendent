@@ -32,9 +32,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 Icons.menu,
               ))),
       body: Column(
-        children: <Widget>[
-          tableCalendar(),
-        ],
+        children: <Widget>[tableCalendar(), datetimeCard()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
@@ -65,6 +63,46 @@ class _CalendarPageState extends State<CalendarPage> {
         locale: 'en_US',
         calendarController: _calendarController,
         onDaySelected: getDateTime,
+      ),
+    );
+  }
+
+  Widget datetimeCard() {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Column(
+        children: <Widget>[
+          Card(
+            child: ListTile(
+              title: Text(''),
+              subtitle: Text(''),
+              trailing: FlatButton(
+                color: Colors.blue,
+                child: Text('Check In',
+                    style: TextStyle(
+                      color: Colors.white,
+                    )),
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              color: Colors.white,
+                              child: Column(children: [
+                                ListTile(
+                                    title: Center(
+                                  child: Text('Check In'),
+                                ))
+                              ]),
+                            ));
+                      });
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

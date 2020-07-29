@@ -16,64 +16,68 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Column(
-              children: [
-                Image.asset(
-                  'assets/icons/brain2.png',
-                  height: 150.0,
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: "Email Address",
-                          prefixIcon: Padding(
-                              padding: EdgeInsetsDirectional.only(start: 12.0),
-                              child: Icon(Icons.email)),
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0)),
-                        ),
-                        onSaved: (value) => _email = value,
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          prefixIcon: Padding(
-                              padding: EdgeInsetsDirectional.only(start: 12.0),
-                              child: Icon(Icons.vpn_key)),
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0)),
-                        ),
-                        onSaved: (value) => _password = value,
-                      ),
-                    ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Column(
+                children: [
+                  Image.asset(
+                    'assets/icons/brain2.png',
+                    height: 150.0,
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    children: <Widget>[
-                      _signinButton(),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            labelText: "Email Address",
+                            prefixIcon: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.only(start: 12.0),
+                                child: Icon(Icons.email)),
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0)),
+                          ),
+                          onSaved: (value) => _email = value,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.text,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            prefixIcon: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.only(start: 12.0),
+                                child: Icon(Icons.vpn_key)),
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0)),
+                          ),
+                          onSaved: (value) => _password = value,
+                        ),
+                      ],
+                    ),
                   ),
-                )
-              ],
-            ),
-          ],
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      children: <Widget>[
+                        _signinButton(),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -99,6 +103,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void routeToCalendarPage(context) {
+    print('check ---> $_email : $_password');
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => CalendarPage()));
   }

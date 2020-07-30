@@ -3,6 +3,8 @@ import 'login-page.dart';
 import 'profile-page.dart';
 import 'announcement.dart';
 import 'notification-page.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 class CalendarPage extends StatefulWidget {
   CalendarPage({Key key}) : super(key: key);
@@ -13,11 +15,11 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   int _selectedIndex = 0;
-  List _pages = [
-    Text("Calendar"),
-    Text("Notification"),
-    Text("Profile"),
-  ];
+  final CalendarController _calendarController = CalendarController();
+  String _formattDateSelected;
+  DateTime _dateToday;
+  String _formattDateToday;
+  String _formattTimeToday;
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +64,14 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
           ),
           ListTile(
-              leading: Icon(Icons.insert_invitation),
-              title: Text('Calendar'),
-              trailing: Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CalendarPage()));
-              }),
+            leading: Icon(Icons.insert_invitation),
+            title: Text('Calendar'),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CalendarPage()));
+            },
+          ),
           ListTile(
             leading: Icon(Icons.announcement),
             title: Text('Announcement'),
@@ -88,40 +91,119 @@ class _CalendarPageState extends State<CalendarPage> {
             },
           ),
           ListTile(
-              leading: Icon(Icons.supervised_user_circle),
-              title: Text('Logout'),
-              trailing: Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
-              })
+            leading: Icon(Icons.supervised_user_circle),
+            title: Text('Logout'),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginPage()));
+            },
+          )
         ]),
       ),
       body: Container(
-        child: Text('hello'),
+        child: TableCalendar(
+          calendarController: _calendarController,
+          locale: 'en_US',
+          onDaySelected: getDateTime,
+        ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: Colors.white,
-      //   items: <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.insert_invitation),
-      //       title: Text('Calendar'),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.notifications_active),
-      //       title: Text('Notification'),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.account_circle),
-      //       title: Text('Profile'),
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: Colors.blue,
-      //   onTap: onSelectItemIndex,
-      // ),
     );
   }
+
+  getDateTime(DateTime _date, List _events) {
+    DateTime _selectedDate;
+    _selectedDate = _date;
+    _formattDateSelected = DateFormat('EEEE,  d MMMM ,y').format(_selectedDate);
+
+    //***Check select today***//
+    _dateToday = DateTime.now();
+    _formattDateToday = DateFormat('EEEE,  d MMMM,y').format(_dateToday);
+    _formattTimeToday = DateFormat.Hms().format(_dateToday);
+    // print('Today ===> $_formattDateToday : $_formattTimeToday');
+    // print('Select ==> $_formattDateSelected');
+
+    if (_formattDateSelected == _formattDateToday) {
+      showModalDate(_formattDateToday, _formattTimeToday);
+    } else {
+      showModalDate(_formattDateSelected, _formattTimeToday);
+    }
+    // _selectedEvents = events;
+    // print('Show events: $events');
+  }
+
+  Future<void> showModalDate(String _currentDate, String _currentTime) {
+    print('check date : $_currentTime');
+    return showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: 230.0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            '$_currentTime',
+                            style: TextStyle(fontSize: 32.0),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            '$_currentDate',
+                            style: TextStyle(fontSize: 18.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          color: Colors.green,
+                          textColor: Colors.white,
+                          child: Text('Check In'),
+                          onPressed: () {},
+                        ),
+                        MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          color: Colors.deepOrange,
+                          textColor: Colors.white,
+                          child: Text('Check Out'),
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  // void initState() {
+  //   super.initState();
+  // }
+
+  // void dispose() {
+  //   _calendarController.dispose();
+  //   super.dispose();
+  // }
 
   void onSelectItemIndex(int index) {
     setState(() {

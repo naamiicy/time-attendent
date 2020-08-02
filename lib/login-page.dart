@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'calendar-page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,22 +10,46 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String _username;
   String _password;
+  bool _showPassword = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(10.0),
         children: <Widget>[
           Padding(
             padding: EdgeInsets.fromLTRB(10.0, 80.0, 10.0, 20.0),
-            child: Container(
-              child: Center(
-                child: Image.asset(
+            child: Column(
+              children: <Widget>[
+                Image.asset(
                   'assets/icons/brain2.png',
-                  height: 130.0,
+                  height: 120.0,
                 ),
-              ),
+                Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          'Time',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                        Text(
+                          'Employee',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ],
+                    ))
+              ],
             ),
           ),
           Form(
@@ -52,12 +75,20 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0),
                 child: TextFormField(
                   keyboardType: TextInputType.text,
-                  obscureText: true,
+                  obscureText: _showPassword,
                   decoration: InputDecoration(
                       labelText: "Password",
                       prefixIcon: Padding(
                         padding: EdgeInsetsDirectional.only(start: 12.0),
                         child: Icon(Icons.lock),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.remove_red_eye),
+                        color: this._showPassword ? Colors.blue : Colors.grey,
+                        onPressed: () {
+                          setState(
+                              () => this._showPassword = !this._showPassword);
+                        },
                       ),
                       fillColor: Colors.white,
                       border: OutlineInputBorder(

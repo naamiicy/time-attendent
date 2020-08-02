@@ -5,6 +5,7 @@ import 'announcement.dart';
 import 'notification-page.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CalendarPage extends StatefulWidget {
   CalendarPage({Key key}) : super(key: key);
@@ -14,12 +15,12 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  int _selectedIndex = 0;
   final CalendarController _calendarController = CalendarController();
   String _formattDateSelected;
-  DateTime _dateToday;
-  String _formattDateToday;
-  String _formattTimeToday;
+  DateTime _dateSelect;
+  DateTime _dateToday = DateTime.now();
+  // String _formattDateToday = DateFormat('EEEE,  d MMMM ,y').format(_dateToday);
+  // String _formattTimeToday = DateFormat.Hms().format(_dateToday);
 
   @override
   Widget build(BuildContext context) {
@@ -101,99 +102,150 @@ class _CalendarPageState extends State<CalendarPage> {
           )
         ]),
       ),
-      body: Container(
-        child: TableCalendar(
-          calendarController: _calendarController,
-          locale: 'en_US',
-          onDaySelected: getDateTime,
+      body: Column(
+        children: <Widget>[
+          TableCalendar(
+            calendarController: _calendarController,
+            locale: 'en_US',
+            onDaySelected: getDateSelect,
+          ),
+          showDateCard(_dateToday)
+        ],
+      ),
+    );
+  }
+
+  showDateCard(DateTime _dateToday) {
+    String _time = DateFormat.Hms().format(_dateToday);
+    return Card(
+      child: ListTile(
+        title: Text('$_time'),
+        trailing: IconButton(
+          icon: Icon(Icons.location_on),
+          onPressed: () {
+            showDialogSaveDate(_time);
+          },
         ),
       ),
     );
   }
 
-  getDateTime(DateTime _date, List _events) {
-    DateTime _selectedDate;
-    _selectedDate = _date;
-    _formattDateSelected = DateFormat('EEEE,  d MMMM ,y').format(_selectedDate);
+  getDateSelect(DateTime _date, List _events) {
+    _dateSelect = _date;
+    _formattDateSelected = DateFormat('EEEE,  d MMMM ,y').format(_dateSelect);
 
-    //***Check select today***//
-    _dateToday = DateTime.now();
-    _formattDateToday = DateFormat('EEEE,  d MMMM,y').format(_dateToday);
-    _formattTimeToday = DateFormat.Hms().format(_dateToday);
-    // print('Today ===> $_formattDateToday : $_formattTimeToday');
-    // print('Select ==> $_formattDateSelected');
+    setState(() {
+      showDateCard(_dateToday);
+    });
+    print('date select $_formattDateSelected ==> ');
 
-    if (_formattDateSelected == _formattDateToday) {
-      showModalDate(_formattDateToday, _formattTimeToday);
-    } else {
-      showModalDate(_formattDateSelected, _formattTimeToday);
-    }
     // _selectedEvents = events;
     // print('Show events: $events');
   }
 
-  Future<void> showModalDate(String _currentDate, String _currentTime) {
-    print('check date : $_currentTime');
-    return showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return Container(
-            height: 230.0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            '$_currentTime',
-                            style: TextStyle(fontSize: 32.0),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            '$_currentDate',
-                            style: TextStyle(fontSize: 18.0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        MaterialButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          color: Colors.green,
-                          textColor: Colors.white,
-                          child: Text('Check In'),
-                          onPressed: () {},
-                        ),
-                        MaterialButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          color: Colors.deepOrange,
-                          textColor: Colors.white,
-                          child: Text('Check Out'),
-                          onPressed: () {},
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+  // Future<void> showModalDate(
+  //     DateTime _datetime, String _currentDate, String _currentTime) {
+  //   print('check date : $_currentTime');
+  //   return showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Container(
+  //         height: 200.0,
+  //         child: ClipRRect(
+  //           borderRadius: BorderRadius.circular(8.0),
+  //           child: Column(
+  //             children: <Widget>[
+  //               Padding(
+  //                 padding: EdgeInsets.all(15.0),
+  //                 child: Column(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                   children: <Widget>[
+  //                     Padding(
+  //                       padding: EdgeInsets.all(5.0),
+  //                       child: Text(
+  //                         '$_currentTime',
+  //                         style: TextStyle(fontSize: 32.0),
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: EdgeInsets.all(5.0),
+  //                       child: Text(
+  //                         '$_currentDate',
+  //                         style: TextStyle(fontSize: 18.0),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //               Padding(
+  //                 padding: EdgeInsets.all(5.0),
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                   children: <Widget>[
+  //                     MaterialButton(
+  //                       shape: RoundedRectangleBorder(
+  //                           borderRadius: BorderRadius.circular(10.0)),
+  //                       color: Colors.green,
+  //                       textColor: Colors.white,
+  //                       child: Text('Check In'),
+  //                       onPressed: () {
+  //                         setState(() {
+  //                           showDialogSaveDate(
+  //                               _datetime, _currentDate, _currentTime);
+  //                         });
+  //                       },
+  //                     ),
+  //                     MaterialButton(
+  //                       shape: RoundedRectangleBorder(
+  //                           borderRadius: BorderRadius.circular(10.0)),
+  //                       color: Colors.grey,
+  //                       textColor: Colors.white,
+  //                       child: Text('Check Out'),
+  //                       onPressed: () {},
+  //                     )
+  //                   ],
+  //                 ),
+  //               )
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
+  Future<void> showDialogSaveDate(String _time) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Warning'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Do you want to save of this time?'),
+              ],
             ),
-          );
-        });
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                // showDateCard(_formattDate, _formattTime);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   // void initState() {
@@ -205,10 +257,10 @@ class _CalendarPageState extends State<CalendarPage> {
   //   super.dispose();
   // }
 
-  void onSelectItemIndex(int index) {
-    setState(() {
-      _selectedIndex = index;
-      print('$_selectedIndex');
-    });
-  }
+  // void onSelectItemIndex(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //     print('$_selectedIndex');
+  //   });
+  // }
 }

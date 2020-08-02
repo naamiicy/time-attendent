@@ -9,70 +9,71 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  String _email;
+  String _username;
   String _password;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Image.asset(
-                'assets/icons/brain2.png',
-                height: 150.0,
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-                child: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        labelText: "Email Address",
-                        prefixIcon: Padding(
-                            padding: EdgeInsetsDirectional.only(start: 12.0),
-                            child: Icon(Icons.email)),
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0)),
-                      ),
-                      onSaved: (value) => _email = value,
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    TextFormField(
-                      keyboardType: TextInputType.text,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                        prefixIcon: Padding(
-                            padding: EdgeInsetsDirectional.only(start: 12.0),
-                            child: Icon(Icons.vpn_key)),
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0)),
-                      ),
-                      onSaved: (value) => _password = value,
-                    ),
-                  ],
+      body: ListView(
+        padding: EdgeInsets.all(8),
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.fromLTRB(10.0, 80.0, 10.0, 20.0),
+            child: Container(
+              child: Center(
+                child: Image.asset(
+                  'assets/icons/brain2.png',
+                  height: 130.0,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Column(
-                  children: <Widget>[
-                    _signinButton(),
-                  ],
-                ),
-              )
-            ],
+            ),
           ),
-        ),
+          Form(
+            key: _formKey,
+            child: Column(children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      labelText: "Username",
+                      prefixIcon: Padding(
+                        padding: EdgeInsetsDirectional.only(start: 12.0),
+                        child: Icon(Icons.person),
+                      ),
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0))),
+                  onSaved: (value) => _username = value,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0),
+                child: TextFormField(
+                  keyboardType: TextInputType.text,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      labelText: "Password",
+                      prefixIcon: Padding(
+                        padding: EdgeInsetsDirectional.only(start: 12.0),
+                        child: Icon(Icons.lock),
+                      ),
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0))),
+                  onSaved: (value) => _password = value,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20.0, 100.0, 20.0, 50.0),
+                child: Center(
+                  child: _signinButton(),
+                ),
+              ),
+            ]),
+          )
+        ],
       ),
     );
   }
@@ -97,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void routeToCalendarPage(context) {
-    print('check ---> $_email : $_password');
+    print('check ---> $_username : $_password');
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => CalendarPage()));
   }

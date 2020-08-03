@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'calendar-page.dart';
+import 'time-attendant-page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
           final form = _formKey.currentState;
           form.save();
           // setAuthToPreferences(_email, _password);
-          routeToCalendarPage(context);
+          routeToTimeAttendantPage(context);
         });
       },
       color: Colors.blue,
@@ -128,10 +128,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void routeToCalendarPage(context) {
+  void routeToTimeAttendantPage(context) {
     print('check ---> $_username : $_password');
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CalendarPage()));
+        context, MaterialPageRoute(builder: (context) => TimeAttendantPage()));
   }
 
   // Future<void> setAuthToPreferences(String _email, String _password) async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_attendent_app/widget/drawer-list.dart';
 
 class NotificationPage extends StatefulWidget {
   NotificationPage({Key key}) : super(key: key);
@@ -14,6 +15,7 @@ class _NotificationPageState extends State<NotificationPage> {
       appBar: AppBar(
         title: Center(child: Text('Notification')),
       ),
+      drawer: DrawerList(),
     );
   }
 }

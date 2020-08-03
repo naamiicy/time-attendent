@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'login-page.dart';
-import 'profile-page.dart';
-import 'announcement.dart';
-import 'notification-page.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:time_attendent_app/widget/drawer-list.dart';
 
 class CalendarPage extends StatefulWidget {
   CalendarPage({Key key}) : super(key: key);
@@ -28,80 +24,7 @@ class _CalendarPageState extends State<CalendarPage> {
       appBar: AppBar(
         title: Center(child: Text('Calendar')),
       ),
-      drawer: Drawer(
-        child: ListView(padding: EdgeInsets.zero, children: <Widget>[
-          Container(
-            height: 130.0,
-            child: DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.person),
-                ),
-                title: Text(
-                  'Username',
-                  style: TextStyle(color: Colors.white, fontSize: 18.0),
-                ),
-                subtitle: Text(
-                  'Edit Profile',
-                  style: TextStyle(
-                      color: Colors.white,
-                      decoration: TextDecoration.underline,
-                      fontSize: 12.0),
-                ),
-                trailing: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                  size: 18.0,
-                ),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ProfilePage()));
-                },
-              ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.insert_invitation),
-            title: Text('Calendar'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CalendarPage()));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.announcement),
-            title: Text('Announcement'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AnnouncementPage()));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Notification'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NotificationPage()));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.supervised_user_circle),
-            title: Text('Logout'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginPage()));
-            },
-          )
-        ]),
-      ),
+      drawer: DrawerList(),
       body: Column(
         children: <Widget>[
           TableCalendar(

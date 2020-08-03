@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0),
                 child: TextFormField(
                   keyboardType: TextInputType.text,
-                  obscureText: _showPassword,
+                  obscureText: !_showPassword,
                   decoration: InputDecoration(
                       labelText: "Password",
                       prefixIcon: Padding(
@@ -84,10 +84,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(Icons.remove_red_eye),
-                        color: this._showPassword ? Colors.blue : Colors.grey,
+                        color: _showPassword ? Colors.blue : Colors.grey,
                         onPressed: () {
-                          setState(
-                              () => this._showPassword = !this._showPassword);
+                          setState(() => _showPassword = !_showPassword);
                         },
                       ),
                       fillColor: Colors.white,

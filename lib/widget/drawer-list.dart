@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_attendent_app/screen/map-location.dart';
 import 'package:time_attendent_app/screen/profile-page.dart';
 import 'package:time_attendent_app/screen/time-attendant-page.dart';
 import 'package:time_attendent_app/screen/calendar-page.dart';
@@ -51,6 +52,15 @@ class _DrawerListState extends State<DrawerList> {
               },
             ),
           ),
+        ),
+        ListTile(
+          leading: Icon(Icons.access_time),
+          title: Text('Test Map'),
+          trailing: Icon(Icons.chevron_right),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MapLocation()));
+          },
         ),
         ListTile(
           leading: Icon(Icons.access_time),

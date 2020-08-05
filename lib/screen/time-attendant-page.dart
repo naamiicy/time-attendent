@@ -24,12 +24,7 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Time Attendant',
-            style: TextStyle(fontSize: 18.0),
-          ),
-        ),
+        title: Center(child: Text('Time Attendant')),
       ),
       drawer: DrawerList(),
       body: Container(

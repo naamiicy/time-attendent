@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends StatefulWidget {
   Auth({Key key}) : super(key: key);

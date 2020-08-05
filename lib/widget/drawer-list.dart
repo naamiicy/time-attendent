@@ -54,8 +54,8 @@ class _DrawerListState extends State<DrawerList> {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.access_time),
-          title: Text('Test Map'),
+          leading: Icon(Icons.location_on),
+          title: Text('Location'),
           trailing: Icon(Icons.chevron_right),
           onTap: () {
             Navigator.push(context,

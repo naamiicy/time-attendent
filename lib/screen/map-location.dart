@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
-import 'package:location/location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:time_attendent_app/widget/drawer-list.dart';
-import 'package:time_attendent_app/models/user-location-model.dart';
 
 class MapLocation extends StatefulWidget {
   MapLocation({Key key}) : super(key: key);
@@ -15,14 +13,15 @@ class MapLocation extends StatefulWidget {
 
 class _MapLocationState extends State<MapLocation> {
   Completer<GoogleMapController> _controller = Completer();
-  UserLocation _currentLocation;
-  LatLng _centerMap;
-  // static const LatLng _centerMap = const LatLng(13.667708, 100.621809);
-  // static final CameraPosition _myLocation = CameraPosition(
-  //   target: _centerMap,
-  //   zoom: 16.0,
-  // );
-  // final Set<Marker> _markers = {};
+
+  //***GetLocation***//
+  Position _position;
+  Geolocator _geolocator = Geolocator();
+  static LatLng _startPosition;
+  static LatLng _lastPostion = _startPosition;
+  Set<Marker> _markers = {};
+  List<Placemark> _place;
+  String _addressSnippet;
 
   @override
   void initState() {
@@ -30,76 +29,84 @@ class _MapLocationState extends State<MapLocation> {
     getLocationUser();
   }
 
+  void getLocationUser() async {
+    _position = await _geolocator.getCurrentPosition();
+    // _place = await _geolocator.placemarkFromCoordinates(
+    //     _position.latitude, _position.longitude);
+
+    setState(() {
+      _startPosition = LatLng(_position.latitude, _position.longitude);
+    });
+  }
+
+  _onMapCreated(GoogleMapController controller) {
+    setState(() {
+      _controller.complete(controller);
+    });
+  }
+
+  onAddMarkers() {
+    setState(() {
+      _markers.add(Marker(
+        markerId: MarkerId(_lastPostion.toString()),
+        position: _lastPostion,
+        infoWindow: InfoWindow(
+          title: '555',
+          snippet: '2222',
+          onTap: () {},
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+    });
+  }
+
+  void _onCameraMove(CameraPosition position) {
+    _lastPostion = position.target;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Map',
-            style: TextStyle(fontSize: 18.0),
-          ),
-        ),
-        backgroundColor: Colors.green,
+        title: Center(child: Text('Clocking GPS')),
       ),
       drawer: DrawerList(),
-      body: GoogleMap(
-        initialCameraPosition: CameraPosition(
-          //Add Function check location
-          target: LatLng(13.6640005, 100.5957369),
-          zoom: 16.0,
-        ),
-        mapType: MapType.normal,
-        onMapCreated: _onMapCreated,
-        // markers: _onAddMarkerButtonPressed(),
-      ),
+      body: _startPosition == null
+          ? Container(
+              child: Center(
+                child: Text(
+                  'Loading map..',
+                  style: TextStyle(color: Colors.grey[400]),
+                ),
+              ),
+            )
+          : Container(
+              child: Stack(
+                children: <Widget>[
+                  GoogleMap(
+                    mapType: MapType.normal,
+                    initialCameraPosition: CameraPosition(
+                      target: _startPosition,
+                      zoom: 16.0,
+                    ),
+                    onMapCreated: _onMapCreated,
+                    markers: _markers,
+                    zoomGesturesEnabled: true, //ซูม
+                    // myLocationEnabled: true, //แสดงพิกัด
+                    // compassEnabled: true, //แสดงเข็มทิศ
+                    onCameraMove: _onCameraMove,
+                  ),
+                  // Card(
+                  //   color: Colors.white70,
+                  //   child: ListTile(
+                  //     leading: Icon(Icons.location_on),
+                  //     title: Text('$addressTtitle'),
+                  //     subtitle: Text('$addressSnippet'),
+                  //   ),
+                  // ),
+                ],
+              ),
+            ),
     );
   }
-
-  getLocationUser() async {
-    var location = Location();
-    var _userLocation = await location.getLocation();
-    _currentLocation = UserLocation(
-      latitude: _userLocation.latitude,
-      longitude: _userLocation.longitude,
-    );
-
-    setState(() {
-      _centerMap =
-          LatLng(_currentLocation.latitude, _currentLocation.longitude);
-      print(' _centerMap ::: ${_centerMap}');
-      print('check _currentLocation.lat ====> : ${_currentLocation.latitude}');
-      print('check _currentLocation.long ===> : ${_currentLocation.longitude}');
-    });
-  }
-
-  void _onMapCreated(GoogleMapController controller) {
-    _controller.complete(controller);
-  }
-
-  // void _onMapTypeButtonPressed() {
-  //   setState(() {
-  //     _currentMapType = _currentMapType == MapType.normal
-  //         ? MapType.satellite
-  //         : MapType.normal;
-  //   });
-  // }
-
-  // void _onCameraMove(CameraPosition position) {
-  //   _lastMapPosition = position.target;
-  // }
-
-  // _onAddMarkerButtonPressed() {
-  //   setState(() {
-  //     _markers.add(Marker(
-  //       markerId: MarkerId(_centerMap.toString()),
-  //       position: _centerMap,
-  //       infoWindow: InfoWindow(
-  //         title: 'title : $_centerMap',
-  //         snippet: 'snippet: $_centerMap',
-  //       ),
-  //       icon: BitmapDescriptor.defaultMarker,
-  //     ));
-  //   });
-  // }
 }

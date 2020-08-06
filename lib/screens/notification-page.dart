@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:time_attendent_app/models/user-auth-model.dart';
 import 'package:time_attendent_app/widgets/drawer-list.dart';
 
 class NotificationPage extends StatefulWidget {
-  NotificationPage({Key key}) : super(key: key);
+  final UserAuthentication user;
+
+  NotificationPage({Key key, @required this.user}) : super(key: key);
 
   @override
   _NotificationPageState createState() => _NotificationPageState();
@@ -15,7 +18,7 @@ class _NotificationPageState extends State<NotificationPage> {
       appBar: AppBar(
         title: Center(child: Text('Notification')),
       ),
-      drawer: DrawerList(),
+      drawer: DrawerList(getUser: widget.user),
     );
   }
 }

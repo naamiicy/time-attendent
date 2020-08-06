@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:time_attendent_app/models/user-address-model.dart';
 
 class ShowTimeCard extends StatefulWidget {
+  final UserAddress userAddress;
+
+  ShowTimeCard({Key key, @required this.userAddress}) : super(key: key);
+
   @override
   _ShowTimeCardState createState() => _ShowTimeCardState();
 }
@@ -9,15 +14,17 @@ class ShowTimeCard extends StatefulWidget {
 class _ShowTimeCardState extends State<ShowTimeCard> {
   DateTime _dateNow = DateTime.now();
   String _timeFormat;
-  String _currentAddress = 'Bangkok, Thailand';
   String _msgPopupSave;
+  UserAddress _userAddress;
+  String _currentAddress;
+  String _currentAddress2;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 200.0,
+        height: 250.0,
         alignment: Alignment.center,
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -27,21 +34,18 @@ class _ShowTimeCardState extends State<ShowTimeCard> {
         ),
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8.0),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              padding: EdgeInsets.only(top: 5.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: 5.0),
+                  Container(
+                    // padding: EdgeInsets.only(top: 5.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Icon(
-                        //   Icons.timer,
-                        //   color: Colors.black87,
-                        // ),
                         Text(
                           _timeFormat,
                           style: TextStyle(
@@ -52,22 +56,24 @@ class _ShowTimeCardState extends State<ShowTimeCard> {
                       ],
                     ),
                   ),
-                  Padding(
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.width * 0.2,
                     padding: EdgeInsets.only(top: 5.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Icon(
-                        //   Icons.location_on,
-                        //   color: Colors.black54,
-                        // ),
-                        Text(
-                          '$_currentAddress',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.black54,
-                          ),
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              _currentAddress,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -75,8 +81,8 @@ class _ShowTimeCardState extends State<ShowTimeCard> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(5.0, 35.0, 5.0, 5.0),
+            Container(
+              padding: EdgeInsets.fromLTRB(5.0, 50.0, 5.0, 5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -165,11 +171,20 @@ class _ShowTimeCardState extends State<ShowTimeCard> {
   void initState() {
     super.initState();
     getTimeNow();
+    getAddress();
   }
 
-  getTimeNow() {
+  void getTimeNow() {
     setState(() {
       _timeFormat = DateFormat.Hms().format(_dateNow);
+    });
+  }
+
+  getAddress() {
+    UserAddress addr = widget.userAddress;
+
+    setState(() {
+      _currentAddress = '${addr.name}, ${addr.thoroughfare}';
     });
   }
 }

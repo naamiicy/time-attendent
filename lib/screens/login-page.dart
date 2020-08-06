@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_attendent_app/models/user-auth-model.dart';
 import 'package:time_attendent_app/screens/calendar-page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +12,7 @@ class _LoginPageState extends State<LoginPage> {
   String _username;
   String _password;
   bool _showPassword = false;
+  UserAuthentication _userAuthentication;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,11 @@ class _LoginPageState extends State<LoginPage> {
           final form = _formKey.currentState;
           form.save();
           // setAuthToPreferences(_email, _password);
-          routeToTimeAttendantPage(context);
+          _userAuthentication = UserAuthentication(
+            username: _username,
+            password: _password,
+          );
+          routeToTimeAttendantPage(_userAuthentication);
         });
       },
       color: Colors.blue,
@@ -127,10 +133,16 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void routeToTimeAttendantPage(context) {
-    print('check ---> $_username : $_password');
+  void routeToTimeAttendantPage(UserAuthentication _userAuthentication) {
+    // print('check ---> $_username : $_password');
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CalendarPage()));
+      context,
+      MaterialPageRoute(
+        builder: (context) => CalendarPage(
+          user: _userAuthentication,
+        ),
+      ),
+    );
   }
 
   // Future<void> setAuthToPreferences(String _email, String _password) async {

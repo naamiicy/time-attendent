@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:time_attendent_app/models/user-auth-model.dart';
 import 'package:time_attendent_app/widgets/drawer-list.dart';
 
 class TimeAttendantPage extends StatefulWidget {
-  TimeAttendantPage({Key key}) : super(key: key);
+  final UserAuthentication user;
+
+  TimeAttendantPage({Key key, @required this.user}) : super(key: key);
 
   @override
   _TimeAttendantPageState createState() => _TimeAttendantPageState();
@@ -21,7 +24,7 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
       appBar: AppBar(
         title: Center(child: Text('Time Attendant')),
       ),
-      drawer: DrawerList(),
+      drawer: DrawerList(getUser: widget.user),
       body: Container(
         child: Column(children: <Widget>[
           Center(

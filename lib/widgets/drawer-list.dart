@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:time_attendent_app/screen/map-location.dart';
-import 'package:time_attendent_app/screen/profile-page.dart';
-import 'package:time_attendent_app/screen/time-attendant-page.dart';
-import 'package:time_attendent_app/screen/calendar-page.dart';
-import 'package:time_attendent_app/screen/announcement-pge.dart';
-import 'package:time_attendent_app/screen/notification-page.dart';
-import 'package:time_attendent_app/screen/login-page.dart';
+import 'package:time_attendent_app/screens/map-location.dart';
+import 'package:time_attendent_app/screens/profile-page.dart';
+import 'package:time_attendent_app/screens/calendar-page.dart';
+import 'package:time_attendent_app/screens/announcement-pge.dart';
+import 'package:time_attendent_app/screens/notification-page.dart';
+import 'package:time_attendent_app/screens/login-page.dart';
 
 class DrawerList extends StatefulWidget {
   DrawerList({Key key}) : super(key: key);
@@ -55,20 +54,11 @@ class _DrawerListState extends State<DrawerList> {
         ),
         ListTile(
           leading: Icon(Icons.location_on),
-          title: Text('Location'),
+          title: Text('Clocking GPS'),
           trailing: Icon(Icons.chevron_right),
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => MapLocation()));
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.access_time),
-          title: Text('Time Attendant'),
-          trailing: Icon(Icons.chevron_right),
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TimeAttendantPage()));
           },
         ),
         ListTile(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_attendent_app/screen/map-location.dart';
-import 'time-attendant-page.dart';
+import 'package:time_attendent_app/screens/calendar-page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -131,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
   void routeToTimeAttendantPage(context) {
     print('check ---> $_username : $_password');
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => TimeAttendantPage()));
+        context, MaterialPageRoute(builder: (context) => CalendarPage()));
   }
 
   // Future<void> setAuthToPreferences(String _email, String _password) async {

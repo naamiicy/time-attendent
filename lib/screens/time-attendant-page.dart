@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:time_attendent_app/widget/drawer-list.dart';
+import 'package:time_attendent_app/widgets/drawer-list.dart';
 
 class TimeAttendantPage extends StatefulWidget {
   TimeAttendantPage({Key key}) : super(key: key);

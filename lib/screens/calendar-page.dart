@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:time_attendent_app/widget/drawer-list.dart';
+import 'package:time_attendent_app/screens/map-location.dart';
+import 'package:time_attendent_app/widgets/drawer-list.dart';
 
 class CalendarPage extends StatefulWidget {
   CalendarPage({Key key}) : super(key: key);
@@ -46,7 +47,8 @@ class _CalendarPageState extends State<CalendarPage> {
         trailing: IconButton(
           icon: Icon(Icons.location_on),
           onPressed: () {
-            showDialogSaveDate(_time);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MapLocation()));
           },
         ),
       ),
@@ -137,39 +139,39 @@ class _CalendarPageState extends State<CalendarPage> {
   //   );
   // }
 
-  Future<void> showDialogSaveDate(String _time) async {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Warning'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Do you want to save of this time?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('CANCEL'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                // showDateCard(_formattDate, _formattTime);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // Future<void> showDialogSaveDate(String _time) async {
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Warning'),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text('Do you want to save of this time?'),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text('CANCEL'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //           FlatButton(
+  //             child: Text('OK'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //               // showDateCard(_formattDate, _formattTime);
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   // void initState() {
   //   super.initState();

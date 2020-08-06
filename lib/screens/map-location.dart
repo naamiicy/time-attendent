@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:time_attendent_app/models/user-position-model.dart';
 import 'package:time_attendent_app/widgets/drawer-list.dart';
+import 'package:time_attendent_app/widgets/time-card.dart';
 
 class MapLocation extends StatefulWidget {
   MapLocation({Key key}) : super(key: key);
@@ -19,12 +20,15 @@ class _MapLocationState extends State<MapLocation> {
   Position _position;
   Geolocator _geolocator = Geolocator();
   static LatLng _startPosition;
-  static LatLng _lastPostion = _startPosition;
+  static LatLng _lastPostion;
   Set<Marker> _markers = {};
   List<Placemark> _place;
   Placemark _listPlace;
   String _addressText;
   String _addressSnippet;
+
+  String _currentDate = '99/99/9999';
+  String _currentTime = '00:00:0000';
 
   //***Set User***//
   UserPosition _userPosition;
@@ -59,14 +63,12 @@ class _MapLocationState extends State<MapLocation> {
   }
 
   Set<Marker> _onSetMarkers() {
-    // setState(() {
     _markers = Set<Marker>.from([
       Marker(
-        markerId: MarkerId(_startPosition.toString()),
-        position: _startPosition,
+        markerId: MarkerId(_lastPostion.toString()),
+        position: _lastPostion,
       )
     ]).toSet();
-    // });
   }
 
   void _onCameraMove(CameraPosition position) {
@@ -108,16 +110,7 @@ class _MapLocationState extends State<MapLocation> {
                   // compassEnabled: true, //แสดงเข็มทิศ
                   onCameraMove: _onCameraMove,
                 ),
-                // Card(
-                //   child: Column(children: <Widget>[
-                //     ListTile(
-                //       leading: Icon(Icons.location_on),
-                //       title: Text('testtttttttttttttttttttttttttttt'),
-                //       subtitle: Text('textttttt tyytyr.'),
-                //     ),
-                //   ]),
-                // )
-                // ),
+                ShowTimeCard(),
               ],
             ),
     );

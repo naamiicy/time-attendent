@@ -10,11 +10,6 @@ class TimeAttendantPage extends StatefulWidget {
 }
 
 class _TimeAttendantPageState extends State<TimeAttendantPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   DateTime _dateNow = DateTime.now();
   String _timeFormat;
   String _dateFormat;
@@ -119,6 +114,11 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
         ]),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   getTimeNow() {

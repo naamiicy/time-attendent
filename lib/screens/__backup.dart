@@ -196,3 +196,110 @@
 //     ),
 //   ),
 // ),
+
+// return Align(
+//   alignment: Alignment.bottomCenter,
+//   child: Container(
+//     height: 250.0,
+//     alignment: Alignment.center,
+//     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+//     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+//     decoration: BoxDecoration(
+//       color: Colors.white70,
+//       borderRadius: BorderRadius.circular(10),
+//     ),
+//     child: Column(
+//       children: <Widget>[
+//         Container(
+//           width: MediaQuery.of(context).size.width * 0.8,
+//           padding: EdgeInsets.only(top: 5.0),
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: <Widget>[
+//               Container(
+//                 // padding: EdgeInsets.only(top: 5.0),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   children: [
+//                     Text(
+//                       _timeFormat,
+//                       style: TextStyle(
+//                         fontSize: 32.0,
+//                         color: Colors.black87,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//               Container(
+//                 width: MediaQuery.of(context).size.width * 0.8,
+//                 height: MediaQuery.of(context).size.width * 0.2,
+//                 padding: EdgeInsets.only(top: 5.0),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   children: <Widget>[
+//                     Column(
+//                       children: <Widget>[
+//                         Text(
+//                           _currentAddress,
+//                           style: TextStyle(
+//                             fontSize: 16.0,
+//                             color: Colors.black54,
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         Container(
+//           padding: EdgeInsets.fromLTRB(5.0, 50.0, 5.0, 5.0),
+// child: Row(
+//   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//   children: <Widget>[
+//     ButtonTheme(
+//       minWidth: 140.0,
+//       height: 50.0,
+//       child: RaisedButton(
+//         child: Text(
+//           'Clock In',
+//           style: TextStyle(
+//             color: Colors.white,
+//             fontSize: 18.0,
+//           ),
+//         ),
+//         color: Colors.green,
+//         onPressed: () {
+//           showDialogSaveTime('In');
+//         },
+//       ),
+//     ),
+//     ButtonTheme(
+//       minWidth: 140.0,
+//       height: 50.0,
+//       child: RaisedButton(
+//         child: Text(
+//           'Clock Out',
+//           style: TextStyle(
+//             color: Colors.white,
+//             fontSize: 18.0,
+//           ),
+//         ),
+//         color: Colors.orangeAccent,
+//         onPressed: () {
+//           showDialogSaveTime('Out');
+//         },
+//       ),
+//     ),
+//   ],
+// ),
+//     )
+//   ],
+// ),
+//   ),
+// );

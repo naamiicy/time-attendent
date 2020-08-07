@@ -5,8 +5,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:time_attendent_app/models/user-address-model.dart';
 import 'package:time_attendent_app/models/user-auth-model.dart';
 import 'package:time_attendent_app/models/user-position-model.dart';
+import 'package:time_attendent_app/widgets/bottom-card.dart';
 import 'package:time_attendent_app/widgets/drawer-list.dart';
-import 'package:time_attendent_app/widgets/time-card.dart';
+import 'package:time_attendent_app/widgets/address-card.dart';
 
 class MapLocation extends StatefulWidget {
   final UserAuthentication user;
@@ -110,29 +111,36 @@ class _MapLocationState extends State<MapLocation> {
               child: Center(
                 child: Text(
                   'Loading map..',
-                  style: TextStyle(color: Colors.grey[400]),
+                  style: TextStyle(color: Colors.grey),
                 ),
               ),
             )
-          : Stack(
+          : Column(
               children: <Widget>[
-                // Container(
-                //   height: MediaQuery.of(context).size.height - 50.0,
-                //   width: MediaQuery.of(context).size.width,
-                GoogleMap(
-                  mapType: MapType.normal,
-                  initialCameraPosition: CameraPosition(
-                    target: _startPosition,
-                    zoom: 16.0,
-                  ),
-                  markers: Set.from(_markers),
-                  onMapCreated: _onMapCreated,
-                  zoomGesturesEnabled: true, //ซูม
-                  // myLocationEnabled: true, //แสดงพิกัด
-                  // compassEnabled: true, //แสดงเข็มทิศ
-                  onCameraMove: _onCameraMove,
+                AddressCard(
+                  userAddress: _userAddress,
                 ),
-                ShowTimeCard(
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      height: MediaQuery.of(context).size.height - 250.0,
+                      child: GoogleMap(
+                        mapType: MapType.normal,
+                        initialCameraPosition: CameraPosition(
+                          target: _startPosition,
+                          zoom: 16.0,
+                        ),
+                        markers: Set.from(_markers),
+                        onMapCreated: _onMapCreated,
+                        zoomGesturesEnabled: true, //ซูม
+                        // myLocationEnabled: true,//แสดงพิกัด
+                        // compassEnabled: true,   //แสดงเข็มทิศ
+                        onCameraMove: _onCameraMove,
+                      ),
+                    ),
+                  ],
+                ),
+                BottomCard(
                   userAddress: _userAddress,
                 ),
               ],

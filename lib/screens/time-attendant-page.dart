@@ -16,7 +16,55 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
   DateTime _dateNow = DateTime.now();
   String _timeFormat;
   String _dateFormat;
-  String _msgSave;
+
+  @override
+  void initState() {
+    super.initState();
+    getTimeNow();
+    getDateNow();
+  }
+
+  getTimeNow() {
+    _timeFormat = DateFormat.Hms().format(_dateNow);
+  }
+
+  getDateNow() {
+    _dateFormat = DateFormat('EEEE,  d MMMM y').format(_dateNow);
+  }
+
+  Future<void> showDialogSaveTime() async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Warning'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Do you want to check in of this time?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                // showDateCard(_formattDate, _formattTime);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +84,14 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
                     Padding(
                       padding: EdgeInsets.all(5.0),
                       child: Text(
-                        getTimeNow(),
+                        _timeFormat,
                         style: TextStyle(fontSize: 32.0),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.all(5.0),
                       child: Text(
-                        getDateNow(),
+                        _dateFormat,
                         style: TextStyle(fontSize: 18.0),
                       ),
                     ),
@@ -88,7 +136,7 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
                             ),
                           ),
                           onPressed: () {
-                            showDialogSaveTime('in');
+                            showDialogSaveTime();
                           },
                         ),
                       ),
@@ -104,7 +152,7 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
                             ),
                           ),
                           onPressed: () {
-                            showDialogSaveTime('out');
+                            showDialogSaveTime();
                           },
                         ),
                       )
@@ -116,55 +164,6 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
           )
         ]),
       ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  getTimeNow() {
-    return _timeFormat = DateFormat.Hms().format(_dateNow);
-  }
-
-  getDateNow() {
-    return _dateFormat = DateFormat('EEEE,  d MMMM y').format(_dateNow);
-  }
-
-  Future<void> showDialogSaveTime(String _msgSave) async {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Warning'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                _msgSave == 'in'
-                    ? Text('Do you want to check in of this time?')
-                    : Text('Do you want to check out of this time?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('CANCEL'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                // showDateCard(_formattDate, _formattTime);
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

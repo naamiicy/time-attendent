@@ -27,8 +27,8 @@ class _MapLocationState extends State<MapLocation> {
   Position _position;
   List<Placemark> _place;
   Placemark _listPlace;
-  static LatLng _startPosition;
-  static LatLng _lastPostion;
+  LatLng _startPosition;
+  LatLng _lastPostion;
 
   //***Set User***//
   UserPosition _userPosition;
@@ -80,24 +80,15 @@ class _MapLocationState extends State<MapLocation> {
     }
   }
 
-  _onMapCreated(GoogleMapController controller) {
-    setState(() {
-      _controller.complete(controller);
-    });
-  }
+  // _onMapCreated(GoogleMapController controller) {
+  //   setState(() {
+  //     _controller.complete(controller);
+  //   });
+  // }
 
-  Set<Marker> _onSetMarkers() {
-    return _markers = Set<Marker>.from([
-      Marker(
-        markerId: MarkerId(_lastPostion.toString()),
-        position: _lastPostion,
-      )
-    ]).toSet();
-  }
-
-  void _onCameraMove(CameraPosition position) {
-    _lastPostion = position.target;
-  }
+  // void _onCameraMove(CameraPosition position) {
+  //   _lastPostion = position.target;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -123,19 +114,30 @@ class _MapLocationState extends State<MapLocation> {
                 Stack(
                   children: <Widget>[
                     Container(
-                      height: MediaQuery.of(context).size.height - 250.0,
+                      height: MediaQuery.of(context).size.height - 245.0,
                       child: GoogleMap(
                         mapType: MapType.normal,
+                        markers: _markers,
                         initialCameraPosition: CameraPosition(
                           target: _startPosition,
                           zoom: 16.0,
                         ),
-                        markers: Set.from(_markers),
-                        onMapCreated: _onMapCreated,
                         zoomGesturesEnabled: true, //ซูม
-                        // myLocationEnabled: true,//แสดงพิกัด
-                        // compassEnabled: true,   //แสดงเข็มทิศ
-                        onCameraMove: _onCameraMove,
+                        // onCameraMove: _onCameraMove,
+                        // compassEnabled: true, //แสดงเข็มทิศ
+                        // myLocationEnabled: true, //แสดงพิกัด
+                        onMapCreated: (GoogleMapController controller) {
+                          _controller.complete(controller);
+
+                          setState(() {
+                            _markers.add(
+                              Marker(
+                                  markerId: MarkerId('$_lastPostion'),
+                                  position: _lastPostion,
+                                  icon: BitmapDescriptor.defaultMarker),
+                            );
+                          });
+                        },
                       ),
                     ),
                   ],

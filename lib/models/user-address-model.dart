@@ -1,4 +1,3 @@
-import 'package:geolocator/geolocator.dart';
 import 'package:time_attendent_app/models/user-position-model.dart';
 
 class UserAddress {

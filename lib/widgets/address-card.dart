@@ -14,15 +14,11 @@ class AddressCard extends StatefulWidget {
 class _AddressCardState extends State<AddressCard> {
   DateTime _dateNow = DateTime.now();
   String _timeFormat;
-  String _msgPopupSave;
-  UserAddress _userAddress;
   String _currentAddress;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      // child: Column(
-      // children: <Widget>[
       child: SafeArea(
         child: Column(
           children: <Widget>[
@@ -45,13 +41,13 @@ class _AddressCardState extends State<AddressCard> {
               ),
             ),
             SizedBox(
-              height: 60.0,
+              height: 50.0,
               child: ListTile(
                 dense: true,
                 contentPadding: EdgeInsets.only(left: 5.0, right: 5.0),
                 leading: Padding(
                   padding: EdgeInsets.only(left: 20.0),
-                  child: Icon(Icons.location_on),
+                  child: Icon(Icons.home),
                 ),
                 title: Text(
                   '$_currentAddress',
@@ -62,10 +58,11 @@ class _AddressCardState extends State<AddressCard> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 5.0,
+            ),
           ],
         ),
-        // ),
-        // ],
       ),
     );
   }
@@ -88,7 +85,7 @@ class _AddressCardState extends State<AddressCard> {
 
     setState(() {
       _currentAddress =
-          '${addr.name}, ${addr.thoroughfare}, ${addr.subAdministrativeArea}, ${addr.administrativeArea}, ${addr.country}';
+          '${addr.name} ${addr.locality} ${addr.administrativeArea} ${addr.country}';
     });
   }
 }

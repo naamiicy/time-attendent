@@ -55,7 +55,7 @@ class _BottomCardState extends State<BottomCard> {
                       ),
                       color: Colors.green,
                       onPressed: () {
-                        showDialogSaveTime('In');
+                        // DialogSave();
                       },
                     ),
                   ),
@@ -73,9 +73,9 @@ class _BottomCardState extends State<BottomCard> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      color: Colors.orangeAccent,
+                      color: Colors.redAccent,
                       onPressed: () {
-                        showDialogSaveTime('Out');
+                        // DialogSave();
                       },
                     ),
                   ),
@@ -137,44 +137,6 @@ class _BottomCardState extends State<BottomCard> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> showDialogSaveTime(String _msgPopupSave) async {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'Warning',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                _msgPopupSave == 'In'
-                    ? Text('Clock In of this time?')
-                    : Text('Clock Out of this time?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text('CANCEL'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

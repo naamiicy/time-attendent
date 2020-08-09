@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:time_attendent_app/models/user-auth-model.dart';
-import 'package:time_attendent_app/screens/map-location.dart';
 import 'package:time_attendent_app/widgets/drawer-list.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -50,12 +49,12 @@ class _CalendarPageState extends State<CalendarPage> {
         trailing: IconButton(
           icon: Icon(Icons.location_on),
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MapLocation(
-                          user: widget.user,
-                        )));
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => MapLocation(
+            //               user: widget.user,
+            //             )));
           },
         ),
       ),

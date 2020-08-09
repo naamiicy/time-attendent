@@ -3,10 +3,7 @@ import 'package:time_attendent_app/models/user-auth-model.dart';
 import 'package:time_attendent_app/screens/map-location.dart';
 import 'package:time_attendent_app/screens/profile-page.dart';
 import 'package:time_attendent_app/screens/calendar-page.dart';
-import 'package:time_attendent_app/screens/announcement-pge.dart';
-import 'package:time_attendent_app/screens/notification-page.dart';
 import 'package:time_attendent_app/screens/login-page.dart';
-import 'package:time_attendent_app/screens/time-attendant-page.dart';
 
 class DrawerList extends StatefulWidget {
   final UserAuthentication getUser;
@@ -44,8 +41,11 @@ class _DrawerListState extends State<DrawerList> {
             ),
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(Icons.person),
+                backgroundColor: Colors.grey,
+                child: Icon(
+                  Icons.person,
+                  color: Colors.white,
+                ),
               ),
               title: Text(
                 _usernameText,
@@ -107,30 +107,30 @@ class _DrawerListState extends State<DrawerList> {
                     builder: (context) => CalendarPage(user: widget.getUser)));
           },
         ),
-        ListTile(
-          leading: Icon(Icons.announcement),
-          title: Text('Announcement'),
-          trailing: Icon(Icons.chevron_right),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        AnnouncementPage(user: widget.getUser)));
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.notifications),
-          title: Text('Notification'),
-          trailing: Icon(Icons.chevron_right),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        NotificationPage(user: widget.getUser)));
-          },
-        ),
+        // ListTile(
+        //   leading: Icon(Icons.announcement),
+        //   title: Text('Announcement'),
+        //   trailing: Icon(Icons.chevron_right),
+        //   onTap: () {
+        //     Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //             builder: (context) =>
+        //                 AnnouncementPage(user: widget.getUser)));
+        //   },
+        // ),
+        // ListTile(
+        //   leading: Icon(Icons.notifications),
+        //   title: Text('Notification'),
+        //   trailing: Icon(Icons.chevron_right),
+        //   onTap: () {
+        //     Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //             builder: (context) =>
+        //                 NotificationPage(user: widget.getUser)));
+        //   },
+        // ),
         ListTile(
           leading: Icon(Icons.supervised_user_circle),
           title: Text('Logout'),

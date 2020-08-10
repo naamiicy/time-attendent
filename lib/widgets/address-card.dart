@@ -47,7 +47,7 @@ class _AddressCardState extends State<AddressCard> {
                 contentPadding: EdgeInsets.only(left: 5.0, right: 5.0),
                 leading: Padding(
                   padding: EdgeInsets.only(left: 20.0),
-                  child: Icon(Icons.home),
+                  child: Icon(Icons.location_on),
                 ),
                 title: Text(
                   '$_currentAddress',
@@ -81,11 +81,11 @@ class _AddressCardState extends State<AddressCard> {
   }
 
   getAddress() {
-    UserAddress addr = widget.userAddress;
+    UserAddress add = widget.userAddress;
 
     setState(() {
       _currentAddress =
-          '${addr.name} ${addr.locality} ${addr.administrativeArea} ${addr.country}';
+          '${add.locality} ${add.administrativeArea} ${add.country}';
     });
   }
 }

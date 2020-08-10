@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:time_attendent_app/models/user-auth-model.dart';
-import 'package:time_attendent_app/widgets/drawer-list.dart';
+import 'package:time_attendent_app/models/user-login-model.dart';
 
 class ProfilePage extends StatefulWidget {
-  final UserAuthentication user;
+  final UserLogin user;
 
   ProfilePage({Key key, @required this.user}) : super(key: key);
 
@@ -18,7 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: Center(child: Text('Profile')),
       ),
-      drawer: DrawerList(getUser: widget.user),
+      // drawer: DrawerList(getUser: widget.user),
     );
   }
 }

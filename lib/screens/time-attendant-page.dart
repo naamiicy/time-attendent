@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:time_attendent_app/models/user-auth-model.dart';
-import 'package:time_attendent_app/widgets/drawer-list.dart';
+import 'package:time_attendent_app/models/user-login-model.dart';
 
 class TimeAttendantPage extends StatefulWidget {
-  final UserAuthentication user;
+  final UserLogin user;
 
   TimeAttendantPage({Key key, @required this.user}) : super(key: key);
 
@@ -16,21 +15,6 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
   DateTime _dateNow = DateTime.now();
   String _timeFormat;
   String _dateFormat;
-
-  @override
-  void initState() {
-    super.initState();
-    getTimeNow();
-    getDateNow();
-  }
-
-  getTimeNow() {
-    _timeFormat = DateFormat.Hms().format(_dateNow);
-  }
-
-  getDateNow() {
-    _dateFormat = DateFormat('EEEE,  d MMMM y').format(_dateNow);
-  }
 
   Future<void> showDialogSaveTime() async {
     return showDialog(
@@ -72,7 +56,7 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
       appBar: AppBar(
         title: Center(child: Text('Time Attendant')),
       ),
-      drawer: DrawerList(getUser: widget.user),
+      // drawer: DrawerList(getUser: widget.user),
       body: Container(
         child: Column(children: <Widget>[
           Center(
@@ -165,5 +149,20 @@ class _TimeAttendantPageState extends State<TimeAttendantPage> {
         ]),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getTimeNow();
+    getDateNow();
+  }
+
+  getTimeNow() {
+    _timeFormat = DateFormat.Hms().format(_dateNow);
+  }
+
+  getDateNow() {
+    _dateFormat = DateFormat('EEEE,  d MMMM y').format(_dateNow);
   }
 }

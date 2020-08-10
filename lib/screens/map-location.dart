@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:time_attendent_app/models/user-address-model.dart';
-import 'package:time_attendent_app/models/user-auth-model.dart';
+import 'package:time_attendent_app/models/user-login-model.dart';
 import 'package:time_attendent_app/models/user-position-model.dart';
 import 'package:time_attendent_app/widgets/bottom-card.dart';
-import 'package:time_attendent_app/widgets/drawer-list.dart';
 import 'package:time_attendent_app/widgets/address-card.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MapLocation extends StatefulWidget {
-  final UserAuthentication user;
+  final UserLogin user;
 
   MapLocation({Key key, @required this.user}) : super(key: key);
 
@@ -31,64 +31,7 @@ class _MapLocationState extends State<MapLocation> {
   LatLng _lastPostion;
 
   //***Set User***//
-  UserPosition _userPosition;
   UserAddress _userAddress;
-
-  @override
-  void initState() {
-    super.initState();
-    getLocationUser();
-  }
-
-  void getLocationUser() async {
-    _position = await _geolocator.getCurrentPosition();
-    _place = await _geolocator.placemarkFromCoordinates(
-        _position.latitude, _position.longitude);
-    _listPlace = _place[0];
-
-    if (_position != null) {
-      setState(() {
-        _startPosition = LatLng(_position.latitude, _position.longitude);
-        _lastPostion = _startPosition;
-
-        _userPosition = UserPosition(
-          latitude: _position.latitude,
-          longitude: _position.longitude,
-        );
-
-        print('${_userPosition.latitude}, ${_userPosition.longitude}');
-
-        _userAddress = UserAddress(
-          administrativeArea: _listPlace.administrativeArea,
-          country: _listPlace.country,
-          isoCountryCode: _listPlace.isoCountryCode,
-          locality: _listPlace.locality,
-          name: _listPlace.name,
-          position: UserPosition(
-            latitude: _position.latitude,
-            longitude: _position.longitude,
-          ),
-          postalCode: _listPlace.postalCode,
-          subAdministrativeArea: _listPlace.subAdministrativeArea,
-          subLocality: _listPlace.subLocality,
-          subThoroughfare: _listPlace.subThoroughfare,
-          thoroughfare: _listPlace.thoroughfare,
-        );
-      });
-    } else {
-      return;
-    }
-  }
-
-  // _onMapCreated(GoogleMapController controller) {
-  //   setState(() {
-  //     _controller.complete(controller);
-  //   });
-  // }
-
-  // void _onCameraMove(CameraPosition position) {
-  //   _lastPostion = position.target;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -96,13 +39,13 @@ class _MapLocationState extends State<MapLocation> {
       appBar: AppBar(
         title: Center(child: Text('Clocking GPS')),
       ),
-      drawer: DrawerList(getUser: widget.user),
-      body: _startPosition == null
+      // drawer: DrawerList(getUser: widget.user),
+      body: (_startPosition == null)
           ? Container(
               child: Center(
-                child: Text(
-                  'Loading map..',
-                  style: TextStyle(color: Colors.grey),
+                child: SpinKitThreeBounce(
+                  color: Colors.lightBlue,
+                  size: 50.0,
                 ),
               ),
             )
@@ -143,10 +86,64 @@ class _MapLocationState extends State<MapLocation> {
                   ],
                 ),
                 BottomCard(
+                  getUser: widget.user,
                   userAddress: _userAddress,
                 ),
               ],
             ),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+    getLocationUser();
+  }
+
+  void getLocationUser() async {
+    _position = await _geolocator.getCurrentPosition();
+    _place = await _geolocator.placemarkFromCoordinates(
+        _position.latitude, _position.longitude);
+    _listPlace = _place[0];
+
+    setLocationUser(_position);
+  }
+
+  setLocationUser(Position _position) {
+    if (_position != null) {
+      setState(() {
+        _startPosition = LatLng(_position.latitude, _position.longitude);
+        _lastPostion = _startPosition;
+
+        _userAddress = UserAddress(
+          administrativeArea: _listPlace.administrativeArea,
+          country: _listPlace.country,
+          isoCountryCode: _listPlace.isoCountryCode,
+          locality: _listPlace.locality,
+          name: _listPlace.name,
+          position: UserPosition(
+            latitude: _position.latitude,
+            longitude: _position.longitude,
+          ),
+          postalCode: _listPlace.postalCode,
+          subAdministrativeArea: _listPlace.subAdministrativeArea,
+          subLocality: _listPlace.subLocality,
+          subThoroughfare: _listPlace.subThoroughfare,
+          thoroughfare: _listPlace.thoroughfare,
+        );
+      });
+    } else {
+      return;
+    }
+  }
+
+  // _onMapCreated(GoogleMapController controller) {
+  //   setState(() {
+  //     _controller.complete(controller);
+  //   });
+  // }
+
+  // void _onCameraMove(CameraPosition position) {
+  //   _lastPostion = position.target;
+  // }
 }

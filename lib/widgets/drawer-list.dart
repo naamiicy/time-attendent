@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:time_attendent_app/models/user-auth-model.dart';
+import 'package:time_attendent_app/models/user-login-model.dart';
 import 'package:time_attendent_app/screens/map-location.dart';
 import 'package:time_attendent_app/screens/profile-page.dart';
 import 'package:time_attendent_app/screens/calendar-page.dart';
 import 'package:time_attendent_app/screens/login-page.dart';
 
 class DrawerList extends StatefulWidget {
-  final UserAuthentication getUser;
+  final UserLogin getUser;
 
   DrawerList({Key key, @required this.getUser}) : super(key: key);
 
@@ -16,18 +16,6 @@ class DrawerList extends StatefulWidget {
 
 class _DrawerListState extends State<DrawerList> {
   String _usernameText;
-
-  @override
-  void initState() {
-    super.initState();
-    getUser();
-  }
-
-  void getUser() {
-    setState(() {
-      _usernameText = widget.getUser.username;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +62,17 @@ class _DrawerListState extends State<DrawerList> {
           ),
         ),
         ListTile(
+          leading: Icon(Icons.insert_invitation),
+          title: Text('Calendar'),
+          trailing: Icon(Icons.chevron_right),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CalendarPage(user: widget.getUser)));
+          },
+        ),
+        ListTile(
           leading: Icon(Icons.location_on),
           title: Text('Clocking GPS'),
           trailing: Icon(Icons.chevron_right),
@@ -96,17 +95,6 @@ class _DrawerListState extends State<DrawerList> {
         //                 TimeAttendantPage(user: widget.getUser)));
         //   },
         // ),
-        ListTile(
-          leading: Icon(Icons.insert_invitation),
-          title: Text('Calendar'),
-          trailing: Icon(Icons.chevron_right),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CalendarPage(user: widget.getUser)));
-          },
-        ),
         // ListTile(
         //   leading: Icon(Icons.announcement),
         //   title: Text('Announcement'),
@@ -142,5 +130,17 @@ class _DrawerListState extends State<DrawerList> {
         )
       ]),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  void getUser() {
+    setState(() {
+      _usernameText = widget.getUser.username;
+    });
   }
 }

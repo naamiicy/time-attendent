@@ -13,16 +13,17 @@ class UserAddress {
   final String subThoroughfare; //617
   final String thoroughfare; //แบริ่ง 58/6 แยก 2
 
-  UserAddress(
-      {this.administrativeArea,
-      this.country,
-      this.isoCountryCode,
-      this.locality,
-      this.name,
-      this.position,
-      this.postalCode,
-      this.subAdministrativeArea,
-      this.subLocality,
-      this.subThoroughfare,
-      this.thoroughfare});
+  UserAddress({
+    this.administrativeArea,
+    this.country,
+    this.isoCountryCode,
+    this.locality,
+    this.name,
+    this.position,
+    this.postalCode,
+    this.subAdministrativeArea,
+    this.subLocality,
+    this.subThoroughfare,
+    this.thoroughfare,
+  });
 }

@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
-import 'package:time_attendent_app/models/user-auth-model.dart';
+import 'package:time_attendent_app/models/user-address-model.dart';
+import 'package:time_attendent_app/models/user-login-model.dart';
+import 'package:time_attendent_app/models/user-work.dart';
 import 'package:time_attendent_app/widgets/drawer-list.dart';
 
 class CalendarPage extends StatefulWidget {
-  final UserAuthentication user;
+  final UserLogin user;
+  final UserWork userWork;
+  final UserAddress getUserAddress;
 
-  CalendarPage({Key key, @required this.user}) : super(key: key);
+  CalendarPage({
+    Key key,
+    @required this.user,
+    this.userWork,
+    this.getUserAddress,
+  }) : super(key: key);
 
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -15,9 +23,10 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   final CalendarController _calendarController = CalendarController();
-  String _formattDateSelected;
-  DateTime _dateSelect;
-  DateTime _dateToday = DateTime.now();
+  String _time;
+  String _address;
+  // String _isClocking;
+  // DateTime _dateSelect;
   // String _formattDateToday = DateFormat('EEEE,  d MMMM ,y').format(_dateToday);
   // String _formattTimeToday = DateFormat.Hms().format(_dateToday);
 
@@ -35,42 +44,74 @@ class _CalendarPageState extends State<CalendarPage> {
             locale: 'en_US',
             onDaySelected: getDateSelect,
           ),
-          showDateCard(_dateToday)
+          showDateCard()
         ],
       ),
     );
   }
 
-  showDateCard(DateTime _dateToday) {
-    String _time = DateFormat.Hms().format(_dateToday);
-    return Card(
-      child: ListTile(
-        title: Text('$_time'),
-        trailing: IconButton(
-          icon: Icon(Icons.location_on),
-          onPressed: () {
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => MapLocation(
-            //               user: widget.user,
-            //             )));
-          },
+  showDateCard() {
+    if (((_time != null) && _address != null)) {
+      return Card(
+        child: ListTile(
+          title: Text('$_time'),
+          subtitle: Text(
+            '$_address',
+            style: TextStyle(
+              fontSize: 15.0,
+            ),
+          ),
+          trailing: IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () {},
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Card();
+    }
   }
 
   getDateSelect(DateTime _date, List _events) {
-    _dateSelect = _date;
-    _formattDateSelected = DateFormat('EEEE,  d MMMM ,y').format(_dateSelect);
-
     setState(() {
-      showDateCard(_dateToday);
+      showDateCard();
     });
-    print('date select $_formattDateSelected ==> ');
-
+    // _dateSelect = _date;
+    // _formattDateSelected = DateFormat('EEEE,  d MMMM ,y').format(_dateSelect);
     // _selectedEvents = events;
     // print('Show events: $events');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getTimeData();
+    getAddressData();
+  }
+
+  getAddressData() {
+    UserAddress add = widget.getUserAddress;
+
+    if (add != null) {
+      setState(() {
+        _address = '${add.locality} ${add.administrativeArea} ${add.country}';
+      });
+    } else {
+      return;
+    }
+  }
+
+  getTimeData() {
+    UserWork work = widget.userWork;
+
+    setState(() {
+      if (work != null && work.workin != null) {
+        // _isClocking = 'in';
+        _time = work.workin;
+      } else if (work != null && work.workout != null) {
+        // _isClocking = 'out';
+        _time = work.workout;
+      }
+    });
   }
 }

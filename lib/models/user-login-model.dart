@@ -1,8 +1,10 @@
-class UserAuthentication {
+class UserLogin {
+  final String loginID;
   final String username;
   final String password;
 
-  UserAuthentication({
+  UserLogin({
+    this.loginID,
     this.username,
     this.password,
   });

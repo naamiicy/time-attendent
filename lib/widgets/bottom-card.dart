@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:time_attendent_app/models/user-address-model.dart';
+import 'package:time_attendent_app/models/user-login-model.dart';
+import 'package:time_attendent_app/models/user-work.dart';
+import 'package:time_attendent_app/screens/calendar-page.dart';
+import 'package:intl/intl.dart';
 
 class BottomCard extends StatefulWidget {
+  final UserLogin getUser;
   final UserAddress userAddress;
 
-  BottomCard({Key key, @required this.userAddress}) : super(key: key);
+  BottomCard({Key key, this.getUser, this.userAddress}) : super(key: key);
 
   @override
   _BottomCardState createState() => _BottomCardState();
 }
 
 class _BottomCardState extends State<BottomCard> {
+  DateTime _date;
+  String _time;
+  String _clocking;
+  UserWork _userWork;
+
+  Widget showLoading() {
+    return SpinKitThreeBounce(
+      color: Colors.lightBlue,
+      size: 50.0,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -44,10 +62,10 @@ class _BottomCardState extends State<BottomCard> {
                     height: 50.0,
                     child: RaisedButton(
                       child: Text(
-                        'Clock In',
+                        'CLOCK IN',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 18.0,
+                          fontSize: 15.0,
                         ),
                       ),
                       shape: RoundedRectangleBorder(
@@ -55,7 +73,8 @@ class _BottomCardState extends State<BottomCard> {
                       ),
                       color: Colors.green,
                       onPressed: () {
-                        // DialogSave();
+                        _clocking = 'clockin';
+                        showDialogSave(_clocking);
                       },
                     ),
                   ),
@@ -64,10 +83,10 @@ class _BottomCardState extends State<BottomCard> {
                     height: 50.0,
                     child: RaisedButton(
                       child: Text(
-                        'Clock Out',
+                        'CLOCK OUT',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 18.0,
+                          fontSize: 15.0,
                         ),
                       ),
                       shape: RoundedRectangleBorder(
@@ -75,68 +94,86 @@ class _BottomCardState extends State<BottomCard> {
                       ),
                       color: Colors.redAccent,
                       onPressed: () {
-                        // DialogSave();
+                        _clocking = 'clockout';
+                        showDialogSave(_clocking);
                       },
                     ),
                   ),
                 ],
               ),
-              // Text(
-              //   "Where are you going to?",
-              //   // style: _theme.textTheme.title,
-              // ),
-              // SizedBox(
-              //   height: 10.0,
-              // ),
-              // Text(
-              //   "Book on demand or pre-scheduled rides",
-              //   style: TextStyle(
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 15.0,
-              // ),
-              // InkWell(
-              //   onTap: () {},
-              //   child: Hero(
-              //     tag: "search",
-              //     child: Container(
-              //       height: 50.0,
-              //       decoration: BoxDecoration(
-              //         border: Border.all(
-              //           color: Colors.grey[300],
-              //         ),
-              //         borderRadius: BorderRadius.circular(6.0),
-              //       ),
-              //       padding: EdgeInsets.symmetric(
-              //         horizontal: 15.0,
-              //       ),
-              //       child: Row(
-              //         children: <Widget>[
-              //           Expanded(
-              //             child: Text(
-              //               "Enter Destination",
-              //               style: TextStyle(
-              //                 color: Colors.grey,
-              //                 fontSize: 17.0,
-              //                 fontWeight: FontWeight.w500,
-              //               ),
-              //             ),
-              //           ),
-              //           Icon(
-              //             Icons.search,
-              //             // color: _theme.primaryColor,
-              //           )
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // )
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<Widget> showDialogSave(String isClocking) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Are you sure?',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Text('This will save your current time and location.'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                setState(() {
+                  if (isClocking == 'clockin') {
+                    _userWork = UserWork(
+                      workdate: _date,
+                      workin: _time,
+                      workout: null,
+                    );
+                  } else {
+                    _userWork = UserWork(
+                      workdate: _date,
+                      workin: null,
+                      workout: _time,
+                    );
+                  }
+                });
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CalendarPage(
+                      user: widget.getUser,
+                      userWork: _userWork,
+                      getUserAddress: widget.userAddress,
+                    ),
+                  ),
+                );
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getDateTime();
+  }
+
+  getDateTime() {
+    setState(() {
+      _date = DateTime.now();
+      _time = DateFormat.Hms().format(_date);
+    });
   }
 }

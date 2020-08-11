@@ -25,11 +25,11 @@ class _DrawerListState extends State<DrawerList> {
           height: 130.0,
           child: DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.cyan[600],
             ),
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: Colors.grey,
+                backgroundColor: Colors.black26,
                 child: Icon(
                   Icons.person,
                   color: Colors.white,
@@ -83,18 +83,6 @@ class _DrawerListState extends State<DrawerList> {
                     builder: (context) => MapLocation(user: widget.getUser)));
           },
         ),
-        // ListTile(
-        //   leading: Icon(Icons.timer),
-        //   title: Text('Time Attendance'),
-        //   trailing: Icon(Icons.chevron_right),
-        //   onTap: () {
-        //     Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //             builder: (context) =>
-        //                 TimeAttendantPage(user: widget.getUser)));
-        //   },
-        // ),
         // ListTile(
         //   leading: Icon(Icons.announcement),
         //   title: Text('Announcement'),

@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Time Attendent',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.cyan[600],
       ),
       home: LoginPage(),
     );

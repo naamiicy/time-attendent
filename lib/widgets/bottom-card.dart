@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:time_attendent_app/models/user-address-model.dart';
 import 'package:time_attendent_app/models/user-login-model.dart';
-import 'package:time_attendent_app/models/user-work.dart';
+import 'package:time_attendent_app/models/user-work-model.dart';
 import 'package:time_attendent_app/screens/calendar-page.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +20,8 @@ class _BottomCardState extends State<BottomCard> {
   DateTime _date;
   String _time;
   String _clocking;
-  UserWork _userWork;
+  // UserWork _userWork;
+  // List<UserWork> _userWork = [];
 
   Widget showLoading() {
     return SpinKitThreeBounce(
@@ -131,31 +132,9 @@ class _BottomCardState extends State<BottomCard> {
               child: Text('OK'),
               onPressed: () {
                 setState(() {
-                  if (isClocking == 'clockin') {
-                    _userWork = UserWork(
-                      workdate: _date,
-                      workin: _time,
-                      workout: null,
-                    );
-                  } else {
-                    _userWork = UserWork(
-                      workdate: _date,
-                      workin: null,
-                      workout: _time,
-                    );
-                  }
+                  addDateTime(isClocking);
+                  routeToTimeAttendantPage();
                 });
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CalendarPage(
-                      user: widget.getUser,
-                      userWork: _userWork,
-                      getUserAddress: widget.userAddress,
-                    ),
-                  ),
-                );
               },
             )
           ],
@@ -175,5 +154,19 @@ class _BottomCardState extends State<BottomCard> {
       _date = DateTime.now();
       _time = DateFormat.Hms().format(_date);
     });
+  }
+
+  void addDateTime(String isClocking) {}
+
+  void routeToTimeAttendantPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CalendarPage(
+          user: widget.getUser,
+          // userWork: _userWork,
+        ),
+      ),
+    );
   }
 }

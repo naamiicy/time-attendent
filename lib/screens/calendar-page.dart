@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:time_attendent_app/models/user-address-model.dart';
 import 'package:time_attendent_app/models/user-login-model.dart';
-import 'package:time_attendent_app/models/user-work.dart';
+import 'package:time_attendent_app/models/user-work-model.dart';
 import 'package:time_attendent_app/widgets/drawer-list.dart';
+import 'package:intl/intl.dart';
 
 class CalendarPage extends StatefulWidget {
   final UserLogin user;
-  final UserWork userWork;
-  final UserAddress getUserAddress;
+  // final List<UserWork> userWork;
 
   CalendarPage({
     Key key,
     @required this.user,
-    this.userWork,
-    this.getUserAddress,
+    // this.userWork,
   }) : super(key: key);
 
   @override
@@ -23,12 +22,11 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   final CalendarController _calendarController = CalendarController();
+  DateTime _dateNow;
+  String _formatDateNow;
   String _time;
   String _address;
-  // String _isClocking;
-  // DateTime _dateSelect;
-  // String _formattDateToday = DateFormat('EEEE,  d MMMM ,y').format(_dateToday);
-  // String _formattTimeToday = DateFormat.Hms().format(_dateToday);
+  DateTime _dateSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -37,81 +35,109 @@ class _CalendarPageState extends State<CalendarPage> {
         title: Center(child: Text('Calendar')),
       ),
       drawer: DrawerList(getUser: widget.user),
-      body: Column(
-        children: <Widget>[
-          TableCalendar(
-            calendarController: _calendarController,
-            locale: 'en_US',
-            onDaySelected: getDateSelect,
-          ),
-          showDateCard()
-        ],
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  // borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: TableCalendar(
+                  rowHeight: 58.0,
+                  calendarStyle: CalendarStyle(
+                    todayColor: Colors.amber[100],
+                    todayStyle: TextStyle(color: Colors.amber[900]),
+                    selectedColor: Colors.amber,
+                    selectedStyle: TextStyle(color: Colors.white),
+                  ),
+                  calendarController: _calendarController,
+                  locale: 'en_US',
+                  onDaySelected: getDateSelect,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 80.0,
+              width: 500.0,
+              child: Container(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 30.0,
+                    right: 20.0,
+                    top: 20.0,
+                    bottom: 20.0,
+                  ),
+                  child: Text(
+                    'Today:  $_formatDateNow',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  showDateCard() {
-    if (((_time != null) && _address != null)) {
-      return Card(
-        child: ListTile(
-          title: Text('$_time'),
-          subtitle: Text(
-            '$_address',
-            style: TextStyle(
-              fontSize: 15.0,
-            ),
-          ),
-          trailing: IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
-        ),
-      );
-    } else {
-      return Card();
-    }
-  }
-
-  getDateSelect(DateTime _date, List _events) {
-    setState(() {
-      showDateCard();
-    });
-    // _dateSelect = _date;
-    // _formattDateSelected = DateFormat('EEEE,  d MMMM ,y').format(_dateSelect);
-    // _selectedEvents = events;
-    // print('Show events: $events');
-  }
+  // showDateCard() {
+  //   if (((_time != null) && _address != null)) {
+  //     return Card(
+  //       child: ListTile(
+  //         title: Text('$_time'),
+  //         subtitle: Text(
+  //           '$_address',
+  //           style: TextStyle(
+  //             fontSize: 15.0,
+  //           ),
+  //         ),
+  //         trailing: IconButton(
+  //           icon: Icon(Icons.more_vert),
+  //           onPressed: () {},
+  //         ),
+  //       ),
+  //     );
+  //   } else {
+  //     return Card();
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    getTimeData();
+    getTimeNow();
+    getDateWorkData();
     getAddressData();
   }
 
-  getAddressData() {
-    UserAddress add = widget.getUserAddress;
-
-    if (add != null) {
-      setState(() {
-        _address = '${add.locality} ${add.administrativeArea} ${add.country}';
-      });
-    } else {
-      return;
-    }
-  }
-
-  getTimeData() {
-    UserWork work = widget.userWork;
+  void getTimeNow() {
+    _dateNow = DateTime.now();
 
     setState(() {
-      if (work != null && work.workin != null) {
-        // _isClocking = 'in';
-        _time = work.workin;
-      } else if (work != null && work.workout != null) {
-        // _isClocking = 'out';
-        _time = work.workout;
-      }
+      _formatDateNow = DateFormat('dd/MM/yyyy').format(_dateNow);
     });
   }
+
+  getDateSelect(DateTime _date, List _events) {
+    setState(() {
+      _dateSelect = _date;
+      // showDateCard();
+    });
+    // _selectedEvents = events;
+    // print('Show events: $events');
+  }
+
+  void getAddressData() {}
+
+  void getDateWorkData() {}
 }

@@ -24,13 +24,13 @@ class _DrawerListState extends State<DrawerList> {
     return Drawer(
       child: ListView(padding: EdgeInsets.zero, children: <Widget>[
         Container(
-          height: 130.0,
+          height: 170.0,
           child: DrawerHeader(
             decoration: BoxDecoration(
               color: Hexcolor('#3f72af'),
             ),
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(20.0),
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundColor: Colors.black38,

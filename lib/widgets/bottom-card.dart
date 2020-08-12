@@ -21,7 +21,7 @@ class _BottomCardState extends State<BottomCard> {
   String _time;
   String _clocking;
   // UserWork _userWork;
-  // List<UserWork> _userWork = [];
+  List<UserWork> _userWork = <UserWork>[];
 
   Widget showLoading() {
     return SpinKitThreeBounce(
@@ -72,9 +72,9 @@ class _BottomCardState extends State<BottomCard> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      color: Colors.green,
+                      color: Colors.green[400],
                       onPressed: () {
-                        _clocking = 'clockin';
+                        _clocking = 'IN';
                         showDialogSave(_clocking);
                       },
                     ),
@@ -93,9 +93,9 @@ class _BottomCardState extends State<BottomCard> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      color: Colors.redAccent,
+                      color: Colors.red[400],
                       onPressed: () {
-                        _clocking = 'clockout';
+                        _clocking = 'OUT';
                         showDialogSave(_clocking);
                       },
                     ),
@@ -132,7 +132,7 @@ class _BottomCardState extends State<BottomCard> {
               child: Text('OK'),
               onPressed: () {
                 setState(() {
-                  addDateTime(isClocking);
+                  saveDateTime(isClocking);
                   routeToTimeAttendantPage();
                 });
               },
@@ -156,7 +156,15 @@ class _BottomCardState extends State<BottomCard> {
     });
   }
 
-  void addDateTime(String isClocking) {}
+  void saveDateTime(String isClocking) {
+    setState(() {
+      _userWork.add(UserWork(
+        workType: isClocking,
+        workDate: _date,
+        workAddress: widget.userAddress,
+      ));
+    });
+  }
 
   void routeToTimeAttendantPage() {
     Navigator.push(
@@ -164,7 +172,7 @@ class _BottomCardState extends State<BottomCard> {
       MaterialPageRoute(
         builder: (context) => CalendarPage(
           user: widget.getUser,
-          // userWork: _userWork,
+          userWork: _userWork,
         ),
       ),
     );

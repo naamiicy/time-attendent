@@ -9,12 +9,12 @@ import 'package:intl/intl.dart';
 
 class CalendarPage extends StatefulWidget {
   final UserLogin user;
-  // final List<UserWork> userWork;
+  final List<UserWork> userWork;
 
   CalendarPage({
     Key key,
     @required this.user,
-    // this.userWork,
+    this.userWork,
   }) : super(key: key);
 
   @override
@@ -28,6 +28,11 @@ class _CalendarPageState extends State<CalendarPage> {
   String _time;
   String _address;
   DateTime _dateSelect;
+  List<UserWork> _userwork = <UserWork>[];
+  List<UserWork> _userworkList = <UserWork>[];
+  // String isClocking;
+  List<String> _formattWorkTime = <String>[];
+  List<String> _formattWorkAddress = <String>[];
 
   //*************************test***********************//
   final List<String> entries = <String>['A', 'B', 'C'];
@@ -56,8 +61,10 @@ class _CalendarPageState extends State<CalendarPage> {
                 child: TableCalendar(
                   rowHeight: 40.0,
                   calendarStyle: CalendarStyle(
-                    todayColor: Hexcolor('#112d4e'),
-                    todayStyle: TextStyle(color: Colors.white),
+                    todayColor: Colors.red[100],
+                    todayStyle: TextStyle(
+                      color: Colors.red[700],
+                    ),
                     selectedColor: Hexcolor('#3f72af'),
                     selectedStyle: TextStyle(color: Colors.white),
                   ),
@@ -71,20 +78,21 @@ class _CalendarPageState extends State<CalendarPage> {
               height: 60.0,
               width: 500.0,
               child: Container(
-                color: Hexcolor('#b44c34'),
+                // color: Hexcolor('#b44c34'),
+                // color: Colors.black38,
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: 30.0,
-                    right: 30.0,
+                    left: 12.0,
+                    right: 12.0,
                     top: 18.0,
-                    bottom: 10.0,
+                    bottom: 8.0,
                   ),
                   child: Text(
                     'Today:  $_formatDateNow',
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black87,
                     ),
                   ),
                 ),
@@ -94,12 +102,49 @@ class _CalendarPageState extends State<CalendarPage> {
               child: SizedBox(
                 child: ListView.separated(
                     padding: EdgeInsets.all(10.0),
-                    itemCount: entries.length,
+                    itemCount: _userworkList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        leading: Icon(Icons.access_time),
-                        title: Text('title : ${entries[index]}'),
-                        subtitle: Text('subtitle : ${entries[index]}'),
+                      return Card(
+                        color: _userworkList[index].workType == 'IN'
+                            ? Colors.green[100]
+                            : Colors.red[100],
+                        // shape: _userworkList[index].workType == 'IN'
+                        //     ? Border(
+                        //         left: BorderSide(color: Colors.green, width: 5))
+                        //     : Border(
+                        //         left: BorderSide(color: Colors.red, width: 5)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: ListTile(
+                          leading: Container(
+                            width: 50.0,
+                            height: 50.0,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.white,
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${_userworkList[index].workType}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            '${DateFormat.Hms().format(_userworkList[index].workDate)}',
+                            style: TextStyle(color: Colors.black87),
+                          ),
+                          subtitle: Text(
+                            '${_userworkList[index].workAddress.locality}, ${_userworkList[index].workAddress.administrativeArea}, ${_userworkList[index].workAddress.country}',
+                            style: TextStyle(color: Colors.black87),
+                          ),
+                        ),
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
@@ -161,7 +206,18 @@ class _CalendarPageState extends State<CalendarPage> {
     // print('Show events: $events');
   }
 
-  void getAddressData() {}
+  void getDateWorkData() {
+    _userwork = widget.userWork;
+    int index;
 
-  void getDateWorkData() {}
+    setState(() {
+      if (_userwork != null) {
+        for (index = 0; index < _userwork.length; index++) {
+          _userworkList = _userwork;
+        }
+      }
+    });
+  }
+
+  void getAddressData() {}
 }

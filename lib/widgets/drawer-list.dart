@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:time_attendent_app/models/user-login-model.dart';
 import 'package:time_attendent_app/screens/map-location.dart';
@@ -24,32 +25,34 @@ class _DrawerListState extends State<DrawerList> {
     return Drawer(
       child: ListView(padding: EdgeInsets.zero, children: <Widget>[
         Container(
-          height: 170.0,
+          height: 175.0,
           child: DrawerHeader(
             decoration: BoxDecoration(
               color: Hexcolor('#3f72af'),
             ),
             child: Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.fromLTRB(0, 20.0, 8.0, 20.0),
               child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.black38,
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.white,
+                leading: SvgPicture.asset(
+                  'assets/images/user2.svg',
+                  color: Colors.white70,
+                  height: 60.0,
+                  width: 60.0,
+                ),
+                title: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 5.0, 8.0, 5.0),
+                  child: Text(
+                    _usernameText,
+                    style: TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
-                title: Text(
-                  _usernameText,
-                  style: TextStyle(color: Colors.white, fontSize: 18.0),
+                subtitle: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 5.0, 8.0, 5.0),
+                  child: Text(
+                    'Programmer',
+                    style: TextStyle(color: Colors.white, fontSize: 16.0),
+                  ),
                 ),
-                // subtitle: Text(
-                //   'Edit Profile',
-                //   style: TextStyle(
-                //       color: Colors.white,
-                //       decoration: TextDecoration.underline,
-                //       fontSize: 12.0),
-                // ),
                 trailing: Icon(
                   Icons.edit,
                   color: Colors.white,
@@ -60,7 +63,7 @@ class _DrawerListState extends State<DrawerList> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              ProfilePage(user: widget.getUser)));
+                              ProfilePage(getUser: widget.getUser)));
                 },
               ),
             ),

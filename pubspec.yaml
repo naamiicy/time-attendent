@@ -33,6 +33,7 @@ dependencies:
   flutter_spinkit: ^4.1.2
   random_string: ^2.1.0
   hexcolor: ^1.0.4
+  flutter_svg: ^0.18.0
 
 flutter_icons:
   android: true
@@ -58,6 +59,8 @@ flutter:
   assets:
     - assets/icons/brain1.png
     - assets/icons/brain2.png
+    - assets/images/user.svg
+    - assets/images/user2.svg
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
 

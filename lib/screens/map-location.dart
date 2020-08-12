@@ -39,6 +39,8 @@ class _MapLocationState extends State<MapLocation> {
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text('Clocking GPS')),
+        backgroundColor: Hexcolor('#3f72af'),
+        elevation: 0.0,
       ),
       // drawer: DrawerList(getUser: widget.user),
       body: (_startPosition == null)

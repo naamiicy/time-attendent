@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:time_attendent_app/models/user-login-model.dart';
 
 class AnnouncementPage extends StatefulWidget {
@@ -16,6 +17,8 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text('Announcement')),
+        backgroundColor: Hexcolor('#ea9a96'),
+        elevation: 0.0,
       ),
       // drawer: DrawerList(getUser: widget.user),
     );

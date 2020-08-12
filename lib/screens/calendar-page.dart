@@ -38,6 +38,8 @@ class _CalendarPageState extends State<CalendarPage> {
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text('Calendar')),
+        backgroundColor: Hexcolor('#3f72af'),
+        elevation: 0.0,
       ),
       drawer: DrawerList(getUser: widget.user),
       body: Container(

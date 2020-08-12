@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
-                    style: TextStyle(fontSize: 18.0),
+                    style: TextStyle(fontSize: 16.0),
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         labelText: "Username",
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
-                    style: TextStyle(fontSize: 18.0),
+                    style: TextStyle(fontSize: 16.0),
                     keyboardType: TextInputType.text,
                     obscureText: !_showPassword,
                     decoration: InputDecoration(
@@ -158,13 +158,13 @@ class _LoginPageState extends State<LoginPage> {
       textColor: Colors.white,
       minWidth: MediaQuery.of(context).size.width,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      height: 65.0,
-      child: Text('Login', style: TextStyle(fontSize: 20.0)),
+      height: 56.0,
+      child: Text('Login', style: TextStyle(fontSize: 16.0)),
     );
   }
 
   String generateUserId() {
-    return randomNumeric(10);
+    return randomNumeric(6);
   }
 
   void routeToTimeAttendantPage(UserLogin _userLogin) {

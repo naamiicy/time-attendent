@@ -76,8 +76,8 @@ class _CalendarPageState extends State<CalendarPage> {
               child: Container(
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: 12.0,
-                    right: 12.0,
+                    left: 30.0,
+                    right: 30.0,
                     top: 18.0,
                     bottom: 8.0,
                   ),
@@ -131,7 +131,7 @@ class _CalendarPageState extends State<CalendarPage> {
                                 style: TextStyle(color: Colors.black87),
                               ),
                               subtitle: Text(
-                                '${_userworkList[index].workAddress.locality}, ${_userworkList[index].workAddress.administrativeArea}, ${_userworkList[index].workAddress.country}',
+                                '${_userworkList[index].workAddress.locality} ${_userworkList[index].workAddress.administrativeArea}, ${_userworkList[index].workAddress.country}',
                                 style: TextStyle(color: Colors.black87),
                               ),
                             ),

@@ -58,7 +58,7 @@ class _DrawerListState extends State<DrawerList> {
                 trailing: Icon(
                   Icons.edit,
                   color: Colors.white,
-                  size: 18.0,
+                  size: 16.0,
                 ),
                 onTap: () {
                   Navigator.push(
@@ -77,7 +77,7 @@ class _DrawerListState extends State<DrawerList> {
             leading: Icon(Icons.insert_invitation),
             title: Text(
               'Calendar',
-              style: TextStyle(fontSize: 18.0),
+              style: TextStyle(fontSize: 16.0),
             ),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
@@ -96,7 +96,7 @@ class _DrawerListState extends State<DrawerList> {
             leading: Icon(Icons.location_on),
             title: Text(
               'Clocking GPS',
-              style: TextStyle(fontSize: 18.0),
+              style: TextStyle(fontSize: 16.0),
             ),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
@@ -114,7 +114,7 @@ class _DrawerListState extends State<DrawerList> {
             leading: Icon(Icons.announcement),
             title: Text(
               'Announcement',
-              style: TextStyle(fontSize: 18.0),
+              style: TextStyle(fontSize: 16.0),
             ),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
@@ -133,7 +133,7 @@ class _DrawerListState extends State<DrawerList> {
             leading: Icon(Icons.notifications),
             title: Text(
               'Notification',
-              style: TextStyle(fontSize: 18.0),
+              style: TextStyle(fontSize: 16.0),
             ),
             trailing: Icon(Icons.chevron_right),
             onTap: () {

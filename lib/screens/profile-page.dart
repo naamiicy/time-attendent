@@ -75,12 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Divider(),
                       ListTile(
                         title: Text('Name : '),
-                        trailing: Text('Kannika'),
-                      ),
-                      Divider(),
-                      ListTile(
-                        title: Text('Surname : '),
-                        trailing: Text('Yudthayong'),
+                        trailing: Text('Kannika Yudthayong'),
                       ),
                       Divider(),
                       ListTile(

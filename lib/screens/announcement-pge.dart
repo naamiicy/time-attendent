@@ -17,7 +17,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text('Announcement')),
-        backgroundColor: Hexcolor('#ea9a96'),
+        backgroundColor: Hexcolor('#3f72af'),
         elevation: 0.0,
       ),
       // drawer: DrawerList(getUser: widget.user),

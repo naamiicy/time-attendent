@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:time_attendent_app/models/user-login-model.dart';
 import 'package:time_attendent_app/screens/map-location.dart';
 import 'package:time_attendent_app/screens/profile-page.dart';
@@ -15,6 +16,7 @@ class DrawerList extends StatefulWidget {
 }
 
 class _DrawerListState extends State<DrawerList> {
+  UserLogin _username;
   String _usernameText;
 
   @override
@@ -25,39 +27,42 @@ class _DrawerListState extends State<DrawerList> {
           height: 130.0,
           child: DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.cyan[600],
+              color: Hexcolor('#3f72af'),
             ),
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.black26,
-                child: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
-              ),
-              title: Text(
-                _usernameText,
-                style: TextStyle(color: Colors.white, fontSize: 18.0),
-              ),
-              subtitle: Text(
-                'Edit Profile',
-                style: TextStyle(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.black38,
+                  child: Icon(
+                    Icons.person,
                     color: Colors.white,
-                    decoration: TextDecoration.underline,
-                    fontSize: 12.0),
+                  ),
+                ),
+                title: Text(
+                  _usernameText,
+                  style: TextStyle(color: Colors.white, fontSize: 18.0),
+                ),
+                // subtitle: Text(
+                //   'Edit Profile',
+                //   style: TextStyle(
+                //       color: Colors.white,
+                //       decoration: TextDecoration.underline,
+                //       fontSize: 12.0),
+                // ),
+                trailing: Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                  size: 18.0,
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ProfilePage(user: widget.getUser)));
+                },
               ),
-              trailing: Icon(
-                Icons.edit,
-                color: Colors.white,
-                size: 18.0,
-              ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ProfilePage(user: widget.getUser)));
-              },
             ),
           ),
         ),
@@ -127,8 +132,12 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   void getUser() {
+    _username = widget.getUser;
+
     setState(() {
-      _usernameText = widget.getUser.username;
+      if (_username.username != null) {
+        _usernameText = _username.username;
+      }
     });
   }
 }

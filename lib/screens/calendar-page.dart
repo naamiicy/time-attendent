@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:time_attendent_app/models/user-address-model.dart';
 import 'package:time_attendent_app/models/user-login-model.dart';
@@ -28,6 +29,11 @@ class _CalendarPageState extends State<CalendarPage> {
   String _address;
   DateTime _dateSelect;
 
+  //*************************test***********************//
+  final List<String> entries = <String>['A', 'B', 'C'];
+  final List<int> colorCodes = <int>[600, 500, 100];
+  //*************************test***********************//
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,19 +47,18 @@ class _CalendarPageState extends State<CalendarPage> {
         ),
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  // borderRadius: BorderRadius.circular(30.0),
-                ),
+            Container(
+              // decoration: BoxDecoration(
+              //   color: Colors.white,
+              // ),
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
                 child: TableCalendar(
-                  rowHeight: 58.0,
+                  rowHeight: 40.0,
                   calendarStyle: CalendarStyle(
-                    todayColor: Colors.amber[100],
-                    todayStyle: TextStyle(color: Colors.amber[900]),
-                    selectedColor: Colors.amber,
+                    todayColor: Hexcolor('#112d4e'),
+                    todayStyle: TextStyle(color: Colors.white),
+                    selectedColor: Hexcolor('#3f72af'),
                     selectedStyle: TextStyle(color: Colors.white),
                   ),
                   calendarController: _calendarController,
@@ -63,30 +68,49 @@ class _CalendarPageState extends State<CalendarPage> {
               ),
             ),
             SizedBox(
-              height: 80.0,
+              height: 60.0,
               width: 500.0,
               child: Container(
+                color: Hexcolor('#b44c34'),
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: 30.0,
-                    right: 20.0,
-                    top: 20.0,
-                    bottom: 20.0,
+                    right: 30.0,
+                    top: 18.0,
+                    bottom: 10.0,
                   ),
                   child: Text(
                     'Today:  $_formatDateNow',
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 16.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black54,
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
             ),
+            Expanded(
+              child: SizedBox(
+                child: ListView.separated(
+                    padding: EdgeInsets.all(10.0),
+                    itemCount: entries.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        leading: Icon(Icons.access_time),
+                        title: Text('title : ${entries[index]}'),
+                        subtitle: Text('subtitle : ${entries[index]}'),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider();
+                    }),
+              ),
+            ),
           ],
         ),
       ),
+      // ),
     );
   }
 

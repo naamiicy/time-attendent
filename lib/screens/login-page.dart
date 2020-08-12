@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:time_attendent_app/models/user-login-model.dart';
 import 'package:time_attendent_app/screens/calendar-page.dart';
 import 'package:random_string/random_string.dart';
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color: Hexcolor('#3f72af'),
                           ),
                         ),
                         Text(
@@ -48,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color: Hexcolor('#3f72af'),
                           ),
                         ),
                       ],
@@ -114,7 +115,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _signinButton() {
     return MaterialButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
         setState(() {
           final form = _formKey.currentState;
@@ -129,10 +129,14 @@ class _LoginPageState extends State<LoginPage> {
           routeToTimeAttendantPage(_userLogin);
         });
       },
-      color: Colors.blue,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      color: Hexcolor('#3f72af'),
       textColor: Colors.white,
       minWidth: MediaQuery.of(context).size.width,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+      height: 65.0,
       child: Text('Login', style: TextStyle(fontSize: 18.0)),
     );
   }

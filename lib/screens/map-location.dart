@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:time_attendent_app/models/user-address-model.dart';
 import 'package:time_attendent_app/models/user-login-model.dart';
 import 'package:time_attendent_app/models/user-position-model.dart';
@@ -44,7 +45,7 @@ class _MapLocationState extends State<MapLocation> {
           ? Container(
               child: Center(
                 child: SpinKitThreeBounce(
-                  color: Colors.lightBlue,
+                  color: Hexcolor('#dbe2ef'),
                   size: 50.0,
                 ),
               ),

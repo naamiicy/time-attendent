@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:time_attendent_app/models/user-address-model.dart';
 import 'package:time_attendent_app/models/user-login-model.dart';
 import 'package:time_attendent_app/models/user-work-model.dart';
 import 'package:time_attendent_app/widgets/drawer-list.dart';
@@ -25,18 +24,13 @@ class _CalendarPageState extends State<CalendarPage> {
   final CalendarController _calendarController = CalendarController();
   DateTime _dateNow;
   String _formatDateNow;
-  String _time;
-  String _address;
   DateTime _dateSelect;
   List<UserWork> _userwork = <UserWork>[];
   List<UserWork> _userworkList = <UserWork>[];
-  // String isClocking;
-  List<String> _formattWorkTime = <String>[];
-  List<String> _formattWorkAddress = <String>[];
 
   //*************************test***********************//
-  final List<String> entries = <String>['A', 'B', 'C'];
-  final List<int> colorCodes = <int>[600, 500, 100];
+  // final List<String> entries = <String>['A', 'B', 'C'];
+  // final List<int> colorCodes = <int>[600, 500, 100];
   //*************************test***********************//
 
   @override

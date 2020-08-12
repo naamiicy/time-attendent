@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Image.asset(
                   'assets/icons/brain2.png',
-                  height: 120.0,
+                  height: 110.0,
                 ),
                 Padding(
                     padding: EdgeInsets.only(top: 10.0),
@@ -63,42 +63,60 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0),
                 child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                      labelText: "Username",
-                      prefixIcon: Padding(
-                        padding: EdgeInsetsDirectional.only(start: 12.0),
-                        child: Icon(Icons.person),
-                      ),
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0))),
-                  onSaved: (value) => _username = value,
-                ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please Enter your username';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(fontSize: 18.0),
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                        labelText: "Username",
+                        errorStyle: TextStyle(fontSize: 16.0),
+                        prefixIcon: Padding(
+                          padding: EdgeInsetsDirectional.only(start: 12.0),
+                          child: Icon(Icons.person),
+                        ),
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0))),
+                    onSaved: (value) {
+                      _username = value;
+                    }),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0),
+                padding: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 0),
                 child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  obscureText: !_showPassword,
-                  decoration: InputDecoration(
-                      labelText: "Password",
-                      prefixIcon: Padding(
-                        padding: EdgeInsetsDirectional.only(start: 12.0),
-                        child: Icon(Icons.lock),
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.remove_red_eye),
-                        color: _showPassword ? Colors.blue : Colors.grey,
-                        onPressed: () {
-                          setState(() => _showPassword = !_showPassword);
-                        },
-                      ),
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0))),
-                  onSaved: (value) => _password = value,
-                ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please Enter your password';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(fontSize: 18.0),
+                    keyboardType: TextInputType.text,
+                    obscureText: !_showPassword,
+                    decoration: InputDecoration(
+                        labelText: "Password",
+                        errorStyle: TextStyle(fontSize: 16.0),
+                        prefixIcon: Padding(
+                          padding: EdgeInsetsDirectional.only(start: 12.0),
+                          child: Icon(Icons.lock),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.remove_red_eye),
+                          color: _showPassword ? Colors.blue : Colors.grey,
+                          onPressed: () {
+                            setState(() => _showPassword = !_showPassword);
+                          },
+                        ),
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0))),
+                    onSaved: (value) {
+                      _password = value;
+                    }),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20.0, 100.0, 20.0, 50.0),
@@ -117,16 +135,20 @@ class _LoginPageState extends State<LoginPage> {
     return MaterialButton(
       onPressed: () {
         setState(() {
-          final form = _formKey.currentState;
-          form.save();
+          if (_formKey.currentState.validate()) {
+            final form = _formKey.currentState;
+            form.save();
 
-          _userID = generateUserId();
-          _userLogin = UserLogin(
-            loginID: _userID,
-            username: _username,
-            password: _password,
-          );
-          routeToTimeAttendantPage(_userLogin);
+            _userID = generateUserId();
+            _userLogin = UserLogin(
+              loginID: _userID,
+              username: _username,
+              password: _password,
+            );
+            routeToTimeAttendantPage(_userLogin);
+          } else {
+            print('is not valid!!');
+          }
         });
       },
       shape: RoundedRectangleBorder(
@@ -137,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
       minWidth: MediaQuery.of(context).size.width,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
       height: 65.0,
-      child: Text('Login', style: TextStyle(fontSize: 18.0)),
+      child: Text('Login', style: TextStyle(fontSize: 20.0)),
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:time_attendent_app/models/user-login-model.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:time_attendent_app/screens/login-page.dart';
 
 class ProfilePage extends StatefulWidget {
   final UserLogin getUser;
@@ -59,10 +60,75 @@ class _ProfilePageState extends State<ProfilePage> {
                 topRight: Radius.circular(30.0),
               ),
               child: Container(
-                height: 800.0,
+                height: 600.0,
                 color: Colors.white,
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: ListView(
+                    padding: EdgeInsets.only(
+                        left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
+                    children: <Widget>[
+                      ListTile(
+                        title: Text('Employee ID : '),
+                        trailing: Text('${_username.loginID}'),
+                      ),
+                      Divider(),
+                      ListTile(
+                        title: Text('Name : '),
+                        trailing: Text('Kannika'),
+                      ),
+                      Divider(),
+                      ListTile(
+                        title: Text('Surname : '),
+                        trailing: Text('Yudthayong'),
+                      ),
+                      Divider(),
+                      ListTile(
+                        title: Text('BirthDay : '),
+                        trailing: Text('14 Feb 1996'),
+                      ),
+                      Divider(),
+                      ListTile(
+                        title: Text('Sex : '),
+                        trailing: Text('Female'),
+                      ),
+                      Divider(),
+                      ListTile(
+                        title: Text('Email : '),
+                        trailing: Text('naam.kannika@gmail.com'),
+                      ),
+                      Divider(),
+                      ListTile(
+                        title: Text('Organization : '),
+                        trailing: Text('THANASUP IMEX CO., LTD'),
+                      ),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      MaterialButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        color: Colors.white38,
+                        textColor: Colors.white,
+                        minWidth: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        height: 60.0,
+                        child: Text('Logout',
+                            style: TextStyle(
+                                fontSize: 18.0, color: Colors.black87)),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),

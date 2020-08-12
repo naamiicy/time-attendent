@@ -22,9 +22,12 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   final CalendarController _calendarController = CalendarController();
+  DateTime _date = DateTime.now();
   DateTime _dateNow;
-  String _formatDateNow;
+  List _events;
+  String _dateNowFormat;
   DateTime _dateSelect;
+  String _dateSelectFormat;
   List<UserWork> _userwork = <UserWork>[];
   List<UserWork> _userworkList = <UserWork>[];
 
@@ -49,9 +52,6 @@ class _CalendarPageState extends State<CalendarPage> {
         child: Column(
           children: <Widget>[
             Container(
-              // decoration: BoxDecoration(
-              //   color: Colors.white,
-              // ),
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: TableCalendar(
@@ -74,8 +74,6 @@ class _CalendarPageState extends State<CalendarPage> {
               height: 60.0,
               width: 500.0,
               child: Container(
-                // color: Hexcolor('#b44c34'),
-                // color: Colors.black38,
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: 12.0,
@@ -84,7 +82,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     bottom: 8.0,
                   ),
                   child: Text(
-                    'Today:  $_formatDateNow',
+                    'Today:  $_dateNowFormat',
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
@@ -95,91 +93,67 @@ class _CalendarPageState extends State<CalendarPage> {
               ),
             ),
             Expanded(
-              child: SizedBox(
-                child: ListView.separated(
-                    padding: EdgeInsets.all(10.0),
-                    itemCount: _userworkList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                        color: _userworkList[index].workType == 'IN'
-                            ? Colors.green[100]
-                            : Colors.red[100],
-                        // shape: _userworkList[index].workType == 'IN'
-                        //     ? Border(
-                        //         left: BorderSide(color: Colors.green, width: 5))
-                        //     : Border(
-                        //         left: BorderSide(color: Colors.red, width: 5)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: ListTile(
-                          leading: Container(
-                            width: 50.0,
-                            height: 50.0,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 10),
-                            decoration: BoxDecoration(
+              child: (_dateSelectFormat == _dateNowFormat)
+                  ? SizedBox(
+                      child: ListView.separated(
+                        padding: EdgeInsets.all(10.0),
+                        itemCount: _userworkList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Card(
+                            color: _userworkList[index].workType == 'IN'
+                                ? Colors.green[100]
+                                : Colors.red[100],
+                            shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
                             ),
-                            child: Center(
-                              child: Text(
-                                '${_userworkList[index].workType}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
+                            child: ListTile(
+                              leading: Container(
+                                width: 50.0,
+                                height: 50.0,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.white,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${_userworkList[index].workType}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
                                 ),
                               ),
+                              title: Text(
+                                '${DateFormat.Hms().format(_userworkList[index].workDate)}',
+                                style: TextStyle(color: Colors.black87),
+                              ),
+                              subtitle: Text(
+                                '${_userworkList[index].workAddress.locality}, ${_userworkList[index].workAddress.administrativeArea}, ${_userworkList[index].workAddress.country}',
+                                style: TextStyle(color: Colors.black87),
+                              ),
                             ),
-                          ),
-                          title: Text(
-                            '${DateFormat.Hms().format(_userworkList[index].workDate)}',
-                            style: TextStyle(color: Colors.black87),
-                          ),
-                          subtitle: Text(
-                            '${_userworkList[index].workAddress.locality}, ${_userworkList[index].workAddress.administrativeArea}, ${_userworkList[index].workAddress.country}',
-                            style: TextStyle(color: Colors.black87),
-                          ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Divider();
-                    }),
-              ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Divider();
+                        },
+                      ),
+                    )
+                  : SizedBox(),
             ),
           ],
         ),
       ),
-      // ),
     );
   }
-
-  // showDateCard() {
-  //   if (((_time != null) && _address != null)) {
-  //     return Card(
-  //       child: ListTile(
-  //         title: Text('$_time'),
-  //         subtitle: Text(
-  //           '$_address',
-  //           style: TextStyle(
-  //             fontSize: 15.0,
-  //           ),
-  //         ),
-  //         trailing: IconButton(
-  //           icon: Icon(Icons.more_vert),
-  //           onPressed: () {},
-  //         ),
-  //       ),
-  //     );
-  //   } else {
-  //     return Card();
-  //   }
-  // }
 
   @override
   void initState() {
     super.initState();
+    getDateSelect(_date, _events);
     getTimeNow();
     getDateWorkData();
     getAddressData();
@@ -189,14 +163,14 @@ class _CalendarPageState extends State<CalendarPage> {
     _dateNow = DateTime.now();
 
     setState(() {
-      _formatDateNow = DateFormat('dd/MM/yyyy').format(_dateNow);
+      _dateNowFormat = DateFormat('dd/MM/yyyy').format(_dateNow);
     });
   }
 
   getDateSelect(DateTime _date, List _events) {
     setState(() {
       _dateSelect = _date;
-      // showDateCard();
+      _dateSelectFormat = DateFormat('dd/MM/yyyy').format(_dateSelect);
     });
     // _selectedEvents = events;
     // print('Show events: $events');

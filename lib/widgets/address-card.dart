@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_attendent_app/models/user-address-model.dart';
 import 'package:intl/intl.dart';
+import 'dart:async';
 
 class AddressCard extends StatefulWidget {
   final UserAddress userAddress;
@@ -15,6 +16,8 @@ class _AddressCardState extends State<AddressCard> {
   DateTime _dateNow = DateTime.now();
   String _timeFormat;
   String _currentAddress;
+
+  String _timeString;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class _AddressCardState extends State<AddressCard> {
                   child: Icon(Icons.timer),
                 ),
                 title: Text(
-                  '$_timeFormat',
+                  '$_timeString',
                   style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.black87,
@@ -70,22 +73,30 @@ class _AddressCardState extends State<AddressCard> {
   @override
   void initState() {
     super.initState();
-    getTimeNow();
+    getTimeCount();
     getAddress();
   }
 
-  void getTimeNow() {
+  void getTimeCount() {
+    _timeString = _formatDateTime(DateTime.now());
+    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
+  }
+
+  void _getTime() {
+    final DateTime now = DateTime.now();
+    final String formattedDateTime = _formatDateTime(now);
     setState(() {
-      _timeFormat = DateFormat.Hms().format(_dateNow);
+      _timeString = formattedDateTime;
     });
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    return DateFormat('dd/MM//yyyy  hh:mm:ss').format(dateTime);
   }
 
   getAddress() {
     UserAddress add = widget.userAddress;
-
-    setState(() {
-      _currentAddress =
-          '${add.locality} ${add.administrativeArea} ${add.country}';
-    });
+    _currentAddress =
+        '${add.locality} ${add.administrativeArea} ${add.country}';
   }
 }

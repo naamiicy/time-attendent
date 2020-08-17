@@ -145,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
               username: _username,
               password: _password,
             );
-            routeToTimeAttendantPage(_userLogin);
+            routeToCalendarPage(_userLogin);
           } else {
             print('is not valid!!');
           }
@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
     return randomNumeric(6);
   }
 
-  void routeToTimeAttendantPage(UserLogin _userLogin) {
+  void routeToCalendarPage(UserLogin _userLogin) {
     Navigator.push(
       context,
       MaterialPageRoute(

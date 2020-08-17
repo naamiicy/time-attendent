@@ -79,7 +79,9 @@ class _AddressCardState extends State<AddressCard> {
 
   void getTimeCount() {
     _timeString = _formatDateTime(DateTime.now());
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
+    Timer.periodic(Duration(seconds: 1), (Timer t) {
+      _getTime();
+    });
   }
 
   void _getTime() {

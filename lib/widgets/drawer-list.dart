@@ -8,6 +8,7 @@ import 'package:time_attendent_app/screens/notification-page.dart';
 import 'package:time_attendent_app/screens/profile-page.dart';
 import 'package:time_attendent_app/screens/calendar-page.dart';
 import 'package:time_attendent_app/screens/login-page.dart';
+import 'package:time_attendent_app/screens/profile-test-page.dart';
 
 class DrawerList extends StatefulWidget {
   final UserLogin getUser;
@@ -55,17 +56,19 @@ class _DrawerListState extends State<DrawerList> {
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
-                trailing: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                  size: 16.0,
-                ),
                 onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) =>
+                  //           ProfilePage(getUser: widget.getUser)),
+                  // );
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ProfilePage(getUser: widget.getUser)));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ProfileTestPage(getUser: widget.getUser)),
+                  );
                 },
               ),
             ),
@@ -142,6 +145,22 @@ class _DrawerListState extends State<DrawerList> {
                   MaterialPageRoute(
                       builder: (context) =>
                           NotificationPage(user: widget.getUser)));
+            },
+          ),
+        ),
+        Divider(),
+        Container(
+          height: 50.0,
+          child: ListTile(
+            leading: Icon(Icons.subdirectory_arrow_left),
+            title: Text(
+              'Logout',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginPage()));
             },
           ),
         ),
